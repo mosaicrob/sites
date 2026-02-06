@@ -1,0 +1,82 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# Streamlit
+.streamlit/
+
+# Data files (keep structure, ignore actual data if sensitive)
+*.csv
+*.xlsx
+!strategy-returns.xlsx
+
+# Generated files
+portfolio_analytics_*.png
+portfolio_analytics_*.jpg
+*.pdf
+
+# OS files
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+
+# Temporary files
+*.tmp
+tmp/
+temp/
+
+# Agent directories (optional - keep skills but ignore cache)
+.agents/skills/*/cache/
+.claude/
+.cline/
+.cursor/
+.continue/
+.crush/
+.agent/
+.codebuddy/
+.commandcode/
+.factory/
+.goose/
+.junie/
+.kilocode/
+.kiro/
+.kode/
+.mcpjam/
+.mux/
+.neovate/
+.openhands/
+.pi/
+.pochi/
+.qoder/
+.qwen/
+.roo/
+.trae/
+.windsurf/
+.zencoder/
+
+# Keep skills directory structure but ignore downloads
+.agents/skills/*/node_modules/
+.agents/skills/*/.git/
+
+# Testing images
+RemovetheBOX.png
+RemoveTheBoxes.png

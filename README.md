@@ -1,0 +1,139 @@
+# Portfolio Builder
+
+Performance tracking and analysis for algorithmic futures trading strategies running on TradeStation.
+
+## Strategies Tracked
+
+| Strategy Family | Variants | Data Range |
+|----------------|----------|------------|
+| VEGA | LE DN NI, LE UP NI, SE DN NI, SE UP NI | 2021-2025 |
+| VECTOR APEX | ES, ES2 | See CSVs |
+
+All strategies trade ES (S&P 500 E-mini) futures.
+
+## Project Structure
+
+```
+portfolio-builder/
+├── strategy-returns.xlsx           # Consolidated cross-strategy analysis (9 strategies)
+├── portfolio_dashboard.py          # 📊 Streamlit web app for portfolio analytics
+├── portfolio_calculator.py         # Portfolio calculation engine
+├── chart_generator.py              # Analytics image generator
+├── requirements.txt                # Python dependencies
+├── PORTFOLIO_DASHBOARD_README.md   # Dashboard documentation
+├── VEGA Returns/
+│   ├── analyze_returns.py          # Performance statistics generator
+│   ├── create_comparison.py        # EasyLanguage vs Python validation
+│   ├── VEGA_Monthly_Returns.csv    # Combined monthly P&L (2021-2025)
+│   ├── VEGA LE DN NI.csv           # EasyLanguage TradeStation exports
+│   ├── VEGA LE UP NI.csv
+│   ├── VEGA SE DN NI.csv
+│   ├── VEGA SE UP NI.csv
+│   ├── VEGA LE DN MAI.xlsx         # Python implementation results
+│   ├── VEGA LE UP MAI.xlsx
+│   ├── VEGA SE DN MAI.xlsx
+│   ├── VEGA SE UP MAI.xlsx
+│   └── *Comparison.xlsx            # Validation workbooks
+├── VECTOR Returns/
+│   ├── VECTOR ES.csv
+│   ├── VECTOR ES2.csv
+│   └── *.xlsx                      # Analysis workbooks
+└── Data-Extraction/                # Project documentation (Obsidian vault)
+```
+
+## Portfolio Dashboard (NEW)
+
+Interactive Streamlit web application for customizing portfolio allocations and analyzing performance.
+
+### Quick Start
+
+```bash
+# Install dependencies
+pip3 install -r requirements.txt
+
+# Launch dashboard
+export PATH="$HOME/Library/Python/3.9/bin:$PATH"
+streamlit run portfolio_dashboard.py
+```
+
+Open http://localhost:8501 in your browser.
+
+### Features
+
+- **Unit-Based Selection** - Select strategies by units (e.g., 1 unit GAMMA = $100,000)
+- **Risk Filtering** - Filter by max drawdown (<5%, <10%, <20%, S&P level)
+- **Leverage Management** - Global constraints (100%-300%)
+- **Real-Time Analytics** - All 12 metrics calculated instantly
+- **Visual Dashboard** - Monthly returns chart with colored bars
+- **Image Export** - Download high-res PNG analytics
+
+### Example
+
+Select: 1 unit GAMMA ($100k) + 2 units WAVE2 ($400k)
+
+Results:
+- Total Allocation: $500,000
+- Required Equity: $225,000 (considers margin factors)
+- Effective Leverage: 45%
+
+See `PORTFOLIO_DASHBOARD_README.md` for full documentation.
+
+## Analysis Scripts
+
+The `analyze_returns.py` script computes:
+- CAGR, monthly/annual standard deviation
+- Sharpe, Sortino, and Calmar ratios
+- Maximum drawdown (% and $)
+- Aggregate trade statistics (win rate, avg winner/loser)
+
+Output is a formatted Excel workbook with monthly returns table, equity curve chart, and monthly returns chart.
+
+### Running
+
+```bash
+cd "VEGA Returns"
+pip install pandas numpy openpyxl
+python analyze_returns.py
+```
+
+## Data Source
+
+All CSV data is exported from TradeStation's performance report feature. See each subdirectory's documentation for format details.
+
+## Claude Code Skills
+
+### Installed Skills
+
+The following skills are already installed in `.agents/skills/`:
+
+- ✅ **portfolio-optimization** - High-performance portfolio calculations with Python C extensions
+  ```bash
+  npx skills add https://github.com/letta-ai/skills --skill portfolio-optimization
+  ```
+
+- ✅ **portfolio-analyzer** - Financial analysis, risk assessment, asset allocation recommendations
+  ```bash
+  npx skills add https://github.com/onewave-ai/claude-skills --skill portfolio-analyzer
+  ```
+
+- ✅ **ui-ux-pro-max** - Professional UI/UX design patterns (used for dashboard)
+  ```bash
+  npx skills add https://github.com/nextlevelbuilder/ui-ux-pro-max-skill --skill ui-ux-pro-max
+  ```
+
+- ✅ **ai-image-generation** - Analytics visualization and image generation
+  ```bash
+  npx skills add https://github.com/inference-sh/skills --skill ai-image-generation
+  ```
+
+### Additional Skills Available
+
+```bash
+# Read and write Excel files
+npx skills add https://github.com/anthropics/skills --skill xlsx
+
+# Marketing and strategy
+npx skills add https://github.com/coreyhaines31/marketingskills --skill marketing-psychology
+npx skills add https://github.com/coreyhaines31/marketingskills --skill marketing-ideas
+npx skills add https://github.com/coreyhaines31/marketingskills --skill pricing-strategy
+```
