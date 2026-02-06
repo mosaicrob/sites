@@ -26,9 +26,9 @@ def generate_analytics_image(portfolio, unit_selections, all_strategies, monthly
     """
     from portfolio_calculator import calculate_weighted_returns
 
-    # Create figure with subplots
-    fig = plt.figure(figsize=(18, 12))
-    gs = fig.add_gridspec(4, 4, hspace=0.4, wspace=0.3, top=0.94, bottom=0.06, left=0.05, right=0.95)
+    # Create figure with subplots - increased height for chart
+    fig = plt.figure(figsize=(18, 20))
+    gs = fig.add_gridspec(6, 4, hspace=0.4, wspace=0.3, top=0.96, bottom=0.04, left=0.05, right=0.95)
 
     # Title and summary header
     fig.suptitle('Portfolio Analytics Dashboard', fontsize=24, fontweight='bold', y=0.97)
@@ -84,8 +84,8 @@ def generate_analytics_image(portfolio, unit_selections, all_strategies, monthly
         ax.set_ylim(0, 1)
         ax.axis('off')
 
-    # Cumulative returns chart (bottom, full width)
-    ax_chart = fig.add_subplot(gs[3, :])
+    # Cumulative returns chart (bottom, full width, 2x height)
+    ax_chart = fig.add_subplot(gs[3:6, :])
 
     # Calculate portfolio monthly returns
     portfolio_monthly_returns = calculate_weighted_returns(
@@ -149,8 +149,36 @@ def generate_analytics_image(portfolio, unit_selections, all_strategies, monthly
     # Set y-axis label format
     ax_chart.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, _: f'{y:.0f}%'))
 
+    # Set Y-axis starting value based on total equity
+    # Start from 0 for cumulative returns (or negative if portfolio has negative returns)
+    y_min = min(min(cumulative_portfolio), min(cumulative_sp500) if sp500_column and len(cumulative_sp500) == len(dates) else 0) * 100
+    y_max = max(max(cumulative_portfolio), max(cumulative_sp500) if sp500_column and len(cumulative_sp500) == len(dates) else 0) * 100
+    ax_chart.set_ylim(y_min - 5, y_max + 10)
+
     # Set background
     ax_chart.set_facecolor('#fafafa')
+
+    # Calculate required equity rounded up to nearest $100,000
+    import math
+    required_equity_rounded = math.ceil(portfolio['required_equity'] / 100000) * 100000
+
+    # Add annotation box with Max Drawdown and Average Year Return
+    annotation_text = (
+        f"Required Equity: ${required_equity_rounded:,.0f}\n"
+        f"Max Drawdown: {portfolio['max_drawdown']:.2%}\n"
+        f"Avg Year Return: {portfolio['average_year']:.2%}"
+    )
+
+    # Add text box in upper right
+    props = dict(boxstyle='round,pad=0.8', facecolor='white', edgecolor='#4a90e2', linewidth=2, alpha=0.95)
+    ax_chart.text(0.98, 0.97, annotation_text,
+                  transform=ax_chart.transAxes,
+                  fontsize=11,
+                  verticalalignment='top',
+                  horizontalalignment='right',
+                  bbox=props,
+                  fontweight='bold',
+                  color='#1e3a5f')
 
     # Save to file
     timestamp = datetime.now().strftime('%Y%m%d_%H%M%S')
