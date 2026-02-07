@@ -77,7 +77,7 @@ st.markdown("""
     }
 
     .input-section h3 {
-        color: #5ba2f0;
+        color: #c5e3ff;
         font-size: 1.2rem;
         font-weight: 600;
         margin-bottom: 1.5rem;
@@ -156,15 +156,17 @@ st.markdown("""
         color: #5ba2f0;
     }
 
-    /* Labels and captions */
+    /* Labels and captions - INCREASED SIZE */
     label {
         color: #5ba2f0 !important;
-        font-weight: 500;
-        font-size: 0.9rem;
+        font-weight: 600;
+        font-size: 1.1rem;
+        letter-spacing: 0.3px;
     }
 
     .stCaptionContainer, [data-testid="stCaptionContainer"] {
         color: #4a90e2 !important;
+        font-size: 1rem;
     }
 
     /* Success/Error messages */
@@ -193,17 +195,40 @@ st.markdown("""
         color: #93c5fd;
     }
 
-    /* Metrics */
+    /* Metrics - BRILLIANT PROFESSIONAL DESIGN */
+    [data-testid="stMetric"] {
+        background: linear-gradient(135deg, rgba(30, 58, 95, 0.4) 0%, rgba(74, 144, 226, 0.2) 100%);
+        border: 2px solid rgba(91, 162, 240, 0.4);
+        border-radius: 12px;
+        padding: 1.5rem 1rem;
+        box-shadow: 0 8px 32px rgba(74, 144, 226, 0.15),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        transition: all 0.3s ease;
+        backdrop-filter: blur(10px);
+    }
+
+    [data-testid="stMetric"]:hover {
+        border-color: #5ba2f0;
+        box-shadow: 0 12px 40px rgba(74, 144, 226, 0.3),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+        transform: translateY(-2px);
+    }
+
     [data-testid="stMetricValue"] {
-        color: #4a90e2;
-        font-size: 1.8rem;
-        font-weight: 700;
+        color: #5ba2f0;
+        font-size: 2.4rem;
+        font-weight: 800;
+        text-shadow: 0 2px 8px rgba(91, 162, 240, 0.3);
+        letter-spacing: -0.5px;
     }
 
     [data-testid="stMetricLabel"] {
-        color: #94a3b8;
-        font-size: 0.9rem;
-        font-weight: 500;
+        color: #e2e8f0;
+        font-size: 1.05rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 0.5rem;
     }
 
     /* Modal/Dialog styling */
@@ -253,7 +278,7 @@ if 'image_path' not in st.session_state:
     st.session_state.image_path = None
 
 # Header
-logo_path = Path("assets/sovrun_logo_v2.svg")
+logo_path = Path("assets/sovrun_logo_pro.svg")
 if logo_path.exists():
     col1, col2 = st.columns([1, 5])
     with col1:
@@ -316,7 +341,7 @@ st.markdown('</div>', unsafe_allow_html=True)
 
 # STRATEGY SELECTION SECTION
 st.markdown('<div class="input-section">', unsafe_allow_html=True)
-st.markdown("### 🎯 Strategy Selection")
+st.markdown("### 📊 Strategy Selection")
 st.caption("Select units for each strategy (1 unit = strategy's allocated capital)")
 
 unit_selections = {}
@@ -384,7 +409,8 @@ if calculate_btn:
                     portfolio,
                     unit_selections,
                     all_strategies,
-                    monthly_returns
+                    monthly_returns,
+                    total_investment
                 )
 
                 # Store in session state

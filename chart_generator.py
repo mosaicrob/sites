@@ -10,7 +10,7 @@ from datetime import datetime
 import pandas as pd
 
 
-def generate_analytics_image(portfolio, unit_selections, all_strategies, monthly_returns_df, output_dir="."):
+def generate_analytics_image(portfolio, unit_selections, all_strategies, monthly_returns_df, total_investment=1000000, output_dir="."):
     """
     Generate PNG with analytics dashboard and monthly return chart
 
@@ -30,16 +30,8 @@ def generate_analytics_image(portfolio, unit_selections, all_strategies, monthly
     fig = plt.figure(figsize=(18, 20))
     gs = fig.add_gridspec(6, 4, hspace=0.4, wspace=0.3, top=0.96, bottom=0.04, left=0.05, right=0.95)
 
-    # Title and summary header
-    fig.suptitle('Portfolio Analytics Dashboard', fontsize=24, fontweight='bold', y=0.97)
-
-    # Summary metrics at top
-    summary_text = (
-        f"Total Allocation: ${portfolio['total_equity']:,.0f}  |  "
-        f"Required Equity: ${portfolio['required_equity']:,.0f}  |  "
-        f"Effective Leverage: {portfolio['required_equity']/portfolio['total_equity']:.1%}"
-    )
-    fig.text(0.5, 0.93, summary_text, ha='center', fontsize=12, style='italic', color='#555555')
+    # Title
+    fig.suptitle('Portfolio Analytics Dashboard', fontsize=24, fontweight='bold', y=0.98)
 
     # Metrics grid (3 rows × 4 columns) = 12 metrics
     metrics = [
@@ -123,21 +115,25 @@ def generate_analytics_image(portfolio, unit_selections, all_strategies, monthly
             cumulative_sp500.append((1 + cumulative_sp500[-1]) * (1 + ret) - 1)
         cumulative_sp500 = cumulative_sp500[1:]
 
-    # Plot cumulative returns
-    ax_chart.plot(dates, [r * 100 for r in cumulative_portfolio],
+    # Calculate actual dollar values from cumulative returns (BEFORE plotting)
+    portfolio_values = [total_investment * (1 + r) for r in cumulative_portfolio]
+    sp500_values = [total_investment * (1 + r) for r in cumulative_sp500] if sp500_column and len(cumulative_sp500) == len(dates) else []
+
+    # Plot cumulative values in dollars
+    ax_chart.plot(dates, portfolio_values,
                   linewidth=3, color='#4a90e2', label='Portfolio', alpha=0.9)
 
     if sp500_column and len(cumulative_sp500) == len(dates):
-        ax_chart.plot(dates, [r * 100 for r in cumulative_sp500],
+        ax_chart.plot(dates, sp500_values,
                       linewidth=2.5, color='#ff8c42', linestyle='--',
                       label='S&P 500', alpha=0.8)
 
-    ax_chart.axhline(0, color='#666666', linestyle='-', linewidth=1, alpha=0.5)
+    ax_chart.axhline(total_investment, color='#666666', linestyle='--', linewidth=1.5, alpha=0.6, label='Initial Investment')
 
     # Styling
     ax_chart.set_xlabel('Date', fontsize=13, fontweight='bold', color='#333333')
-    ax_chart.set_ylabel('Cumulative Return (%)', fontsize=13, fontweight='bold', color='#333333')
-    ax_chart.set_title('Cumulative Returns vs S&P 500', fontsize=16, fontweight='bold', pad=15, color='#1e3a5f')
+    ax_chart.set_ylabel('Portfolio Value ($)', fontsize=13, fontweight='bold', color='#333333')
+    ax_chart.set_title('Portfolio Growth vs S&P 500', fontsize=16, fontweight='bold', pad=15, color='#1e3a5f')
     ax_chart.grid(True, alpha=0.2, linestyle=':', linewidth=0.8)
     ax_chart.legend(loc='upper left', fontsize=12, framealpha=0.95, edgecolor='#cccccc')
 
@@ -146,14 +142,15 @@ def generate_analytics_image(portfolio, unit_selections, all_strategies, monthly
     ax_chart.xaxis.set_major_locator(mdates.MonthLocator(interval=6))
     plt.setp(ax_chart.xaxis.get_majorticklabels(), rotation=45, ha='right')
 
-    # Set y-axis label format
-    ax_chart.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, _: f'{y:.0f}%'))
+    # Set y-axis label format to show dollar values
+    ax_chart.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, _: f'${y/1000:.0f}K' if abs(y) >= 1000 else f'${y:.0f}'))
 
-    # Set Y-axis starting value based on total equity
-    # Start from 0 for cumulative returns (or negative if portfolio has negative returns)
-    y_min = min(min(cumulative_portfolio), min(cumulative_sp500) if sp500_column and len(cumulative_sp500) == len(dates) else 0) * 100
-    y_max = max(max(cumulative_portfolio), max(cumulative_sp500) if sp500_column and len(cumulative_sp500) == len(dates) else 0) * 100
-    ax_chart.set_ylim(y_min - 5, y_max + 10)
+    # Set Y-axis based on total investment
+    # Set Y-axis range
+    all_values = portfolio_values + (sp500_values if sp500_values else [])
+    y_min = min(min(all_values), total_investment * 0.95)
+    y_max = max(all_values) * 1.05
+    ax_chart.set_ylim(y_min, y_max)
 
     # Set background
     ax_chart.set_facecolor('#fafafa')
