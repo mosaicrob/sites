@@ -18,10 +18,16 @@ Portfolio performance tracking and analysis for algorithmic futures trading stra
 - **`Data-Extraction/`** - Obsidian vault for project documentation and recommendations.
 - **`strategy-returns.xlsx`** - Top-level consolidated workbook across all strategies (9 active strategies + 3 benchmarks).
 - **Portfolio Dashboard** (NEW) - Interactive Streamlit web app for custom portfolio analysis:
-  - `portfolio_dashboard.py` - Main Streamlit application
+  - `portfolio_dashboard_v2.py` - Main Streamlit application (SOVRUN branded)
   - `portfolio_calculator.py` - Portfolio calculation logic
   - `chart_generator.py` - Analytics image generation
   - `PORTFOLIO_DASHBOARD_README.md` - Full documentation
+- **Quarto Documentation** (NEW) - Comprehensive analytics reports and website:
+  - `portfolio_analytics.qmd` - Main analytics report with methodology and examples
+  - `index.qmd` - Homepage for Quarto website
+  - `_quarto.yml` - Quarto configuration
+  - `styles.css` - Custom SOVRUN-themed CSS styling
+  - Generates HTML website and PDF reports
 - **`.agents/skills/`** - Installed Claude Code skills:
   - `portfolio-optimization` - Python C extensions for high-performance portfolio calculations
   - `portfolio-analyzer` - Financial analysis, risk assessment, asset allocation recommendations
@@ -95,6 +101,33 @@ streamlit run portfolio_dashboard.py
 - Effective Leverage = 45%
 
 See `PORTFOLIO_DASHBOARD_README.md` for full documentation.
+
+### Quarto Documentation
+
+```bash
+# Render single analytics report
+quarto render portfolio_analytics.qmd
+
+# Build full Quarto website (index.qmd + portfolio_analytics.qmd)
+quarto render
+
+# Preview website locally
+quarto preview
+```
+
+**Outputs:**
+- HTML website at `_site/` (index.html, portfolio_analytics.html)
+- PDF reports when `--to pdf` format is specified
+- Includes interactive Python code execution with embedded charts
+
+**Features:**
+- Comprehensive methodology documentation
+- Live Python code examples using portfolio_calculator.py
+- Performance visualizations (cumulative returns, monthly distributions)
+- Risk analysis sections (leverage, drawdown, correlation)
+- Exports to HTML and PDF formats
+
+**Dependencies:** Requires Quarto CLI installed ([quarto.org](https://quarto.org))
 
 ## Data Architecture
 

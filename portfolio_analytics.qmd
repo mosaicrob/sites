@@ -1,0 +1,462 @@
+---
+title: "SOVRUN Portfolio Analytics"
+subtitle: "Risk-First Algorithmic Trading Strategy Analysis"
+author: "SOVRUN Education"
+date: today
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    code-fold: true
+    theme: cosmo
+    css: styles.css
+  pdf:
+    toc: true
+    number-sections: true
+    colorlinks: true
+execute:
+  echo: true
+  warning: false
+  message: false
+jupyter: python3
+---
+
+# Executive Summary
+
+This document provides a comprehensive analysis of the SOVRUN portfolio analytics system, which enables risk-based allocation across multiple algorithmic futures trading strategies. The system implements a unit-based allocation framework with cross-margining capabilities, allowing investors to construct portfolios that align with their risk tolerance and leverage constraints.
+
+## Key Features
+
+- **9 Trading Strategies**: Active algorithms trading ES (S&P 500 E-mini) futures
+- **Risk-Based Filtering**: Strategies filtered by maximum drawdown thresholds
+- **Unit-Based Allocation**: Simplified position sizing (1 unit = strategy total equity)
+- **Cross-Margining**: Variable margin requirements per strategy (15%-50%)
+- **Real-Time Analytics**: 12 portfolio-level metrics calculated instantly
+- **Benchmark Comparison**: Performance tracked against S&P 500
+
+# Methodology
+
+## Portfolio Construction Framework
+
+### Unit-Based Allocation
+
+The system uses a unit-based approach where each strategy has a defined unit size equal to its total equity requirement. Users select the number of units for each strategy:
+
+$$\text{Total Allocation} = \sum_{i=1}^{n} \text{units}_i \times \text{total\_equity}_i$$
+
+### Cross-Margining Model
+
+Each strategy has a unique margin equity factor reflecting its risk characteristics:
+
+$$\text{Required Equity} = \sum_{i=1}^{n} \text{units}_i \times \text{total\_equity}_i \times \text{margin\_equity}_i$$
+
+**Effective Leverage:**
+
+$$\text{Leverage} = \frac{\text{Required Equity}}{\text{Total Allocation}}$$
+
+### Risk Filtering
+
+Strategies are filtered based on maximum drawdown tolerance:
+
+| Risk Appetite | Max Drawdown Threshold |
+|---------------|------------------------|
+| S&P Level | Match S&P 500 max drawdown |
+| <20% Peak to Valley | 20% maximum |
+| <10% Peak to Valley | 10% maximum |
+| <5% Peak to Valley | 5% maximum |
+
+## Performance Metrics
+
+### Core Statistics
+
+```{python}
+import pandas as pd
+import numpy as np
+from portfolio_calculator import load_strategy_data
+
+# Load strategy data
+data = load_strategy_data("strategy-returns.xlsx")
+strategies = data['strategies']
+
+# Display strategy overview
+strategy_df = pd.DataFrame([
+    {
+        'Strategy': s['name'],
+        'Total Equity': f"${s['total_equity']:,.0f}",
+        'Margin Factor': f"{s['margin_equity']:.1%}",
+        'Max Drawdown': f"{s['max_drawdown']:.2%}",
+        'Sharpe Ratio': f"{s['sharpe_ratio']:.2f}",
+        'CAGR': f"{s['average_year']:.2%}"
+    }
+    for s in strategies
+])
+
+print(strategy_df.to_markdown(index=False))
+```
+
+### Risk-Adjusted Returns
+
+The system calculates three key risk-adjusted metrics:
+
+**Sharpe Ratio:**
+$$\text{Sharpe} = \frac{\text{Average Return} - \text{Risk-Free Rate}}{\text{Standard Deviation}}$$
+
+**Sortino Ratio:**
+$$\text{Sortino} = \frac{\text{Average Return} - \text{Risk-Free Rate}}{\text{Downside Deviation}}$$
+
+**Calmar Ratio:**
+$$\text{Calmar} = \frac{\text{CAGR}}{\text{Maximum Drawdown}}$$
+
+## Example Portfolio Analysis
+
+### Conservative Portfolio (<5% Drawdown)
+
+```{python}
+from portfolio_calculator import calculate_portfolio_metrics, filter_strategies_by_risk
+
+# Load data
+data = load_strategy_data("strategy-returns.xlsx")
+all_strategies = data['strategies']
+monthly_returns = data['monthly_returns']
+
+# Filter by risk
+risk_appetite = 0.05  # 5% max drawdown
+eligible_strategies = [s for s in all_strategies if abs(s['max_drawdown']) <= risk_appetite]
+
+print(f"\n**Eligible Strategies:** {len(eligible_strategies)}")
+for s in eligible_strategies:
+    print(f"  - {s['name']} (Drawdown: {s['max_drawdown']:.2%})")
+
+# Example allocation: 1 unit each of lowest drawdown strategies
+unit_selections = {}
+for s in sorted(eligible_strategies, key=lambda x: abs(x['max_drawdown']))[:3]:
+    unit_selections[s['name']] = 1
+
+print(f"\n**Selected Units:**")
+for name, units in unit_selections.items():
+    print(f"  - {name}: {units} unit(s)")
+
+# Calculate portfolio metrics
+portfolio = calculate_portfolio_metrics(
+    unit_selections,
+    all_strategies,
+    monthly_returns,
+    max_leverage=200
+)
+
+print(f"\n**Portfolio Metrics:**")
+print(f"  - Total Allocation: ${portfolio['total_equity']:,.0f}")
+print(f"  - Required Equity: ${portfolio['required_equity']:,.0f}")
+print(f"  - Effective Leverage: {portfolio['required_equity']/portfolio['total_equity']:.1%}")
+print(f"  - Max Drawdown: {portfolio['max_drawdown']:.2%}")
+print(f"  - Average Annual Return: {portfolio['average_year']:.2%}")
+print(f"  - Sharpe Ratio: {portfolio['sharpe_ratio']:.2f}")
+print(f"  - Calmar Ratio: {portfolio['calmar_ratio']:.2f}")
+```
+
+### Balanced Portfolio (<10% Drawdown)
+
+```{python}
+# Filter for <10% drawdown
+risk_appetite = 0.10
+eligible_strategies = [s for s in all_strategies if abs(s['max_drawdown']) <= risk_appetite]
+
+print(f"\n**Eligible Strategies:** {len(eligible_strategies)}")
+
+# Diversified allocation
+unit_selections = {
+    'DELTA S&P': 1,
+    'GAMMA S&P': 2,
+    'WAVE2 S&P': 1,
+}
+
+# Calculate metrics
+portfolio = calculate_portfolio_metrics(
+    unit_selections,
+    all_strategies,
+    monthly_returns,
+    max_leverage=200
+)
+
+print(f"\n**Portfolio Metrics:**")
+print(f"  - Total Allocation: ${portfolio['total_equity']:,.0f}")
+print(f"  - Required Equity: ${portfolio['required_equity']:,.0f}")
+print(f"  - Effective Leverage: {portfolio['required_equity']/portfolio['total_equity']:.1%}")
+print(f"  - Total Trades: {portfolio['total_trades']:.0f}")
+print(f"  - Win Rate: {portfolio['winning_trades']/portfolio['total_trades']:.1%}")
+print(f"  - Max Drawdown: {portfolio['max_drawdown']:.2%}")
+print(f"  - Average Annual Return: {portfolio['average_year']:.2%}")
+print(f"  - Sharpe Ratio: {portfolio['sharpe_ratio']:.2f}")
+```
+
+## Performance Visualization
+
+### Cumulative Returns Chart
+
+```{python}
+#| label: fig-cumulative-returns
+#| fig-cap: "Portfolio Cumulative Returns vs S&P 500"
+
+import matplotlib.pyplot as plt
+from portfolio_calculator import calculate_weighted_returns
+
+# Calculate portfolio monthly returns
+portfolio_monthly_returns = calculate_weighted_returns(
+    unit_selections,
+    all_strategies,
+    monthly_returns,
+    portfolio['total_equity']
+)
+
+# Get dates
+dates = pd.to_datetime(monthly_returns['DATE'])
+
+# Calculate cumulative returns
+cumulative_portfolio = [0]
+for ret in portfolio_monthly_returns:
+    cumulative_portfolio.append((1 + cumulative_portfolio[-1]) * (1 + ret) - 1)
+cumulative_portfolio = cumulative_portfolio[1:]
+
+# S&P 500 cumulative returns
+sp500_column = [col for col in monthly_returns.columns if 'S&P' in str(col) and 'DELTA' not in str(col)][0]
+sp500_returns = monthly_returns[sp500_column].fillna(0).tolist()
+cumulative_sp500 = [0]
+for ret in sp500_returns:
+    cumulative_sp500.append((1 + cumulative_sp500[-1]) * (1 + ret) - 1)
+cumulative_sp500 = cumulative_sp500[1:]
+
+# Plot
+fig, ax = plt.subplots(figsize=(12, 6))
+ax.plot(dates, cumulative_portfolio, linewidth=2.5, color='#4a90e2', label='Portfolio', alpha=0.9)
+ax.plot(dates, cumulative_sp500, linewidth=2, color='#ff8c42', linestyle='--', label='S&P 500', alpha=0.8)
+ax.axhline(0, color='#666666', linestyle='--', linewidth=1, alpha=0.5)
+
+ax.set_xlabel('Date', fontsize=12, fontweight='bold')
+ax.set_ylabel('Cumulative Return', fontsize=12, fontweight='bold')
+ax.set_title('Portfolio vs S&P 500 Performance', fontsize=14, fontweight='bold', pad=15)
+ax.grid(True, alpha=0.2, linestyle=':')
+ax.legend(loc='upper left', fontsize=11)
+ax.yaxis.set_major_formatter(plt.FuncFormatter(lambda y, _: f'{y:.0%}'))
+ax.set_facecolor('#fafafa')
+
+plt.tight_layout()
+plt.show()
+```
+
+### Monthly Returns Distribution
+
+```{python}
+#| label: fig-monthly-distribution
+#| fig-cap: "Monthly Returns Distribution"
+
+fig, ax = plt.subplots(figsize=(12, 6))
+
+# Create histogram
+ax.hist(portfolio_monthly_returns, bins=30, color='#4a90e2', alpha=0.7, edgecolor='black')
+ax.axvline(np.mean(portfolio_monthly_returns), color='#ff8c42', linestyle='--', linewidth=2, label=f'Mean: {np.mean(portfolio_monthly_returns):.2%}')
+ax.axvline(np.median(portfolio_monthly_returns), color='#2ecc71', linestyle='--', linewidth=2, label=f'Median: {np.median(portfolio_monthly_returns):.2%}')
+
+ax.set_xlabel('Monthly Return', fontsize=12, fontweight='bold')
+ax.set_ylabel('Frequency', fontsize=12, fontweight='bold')
+ax.set_title('Monthly Returns Distribution', fontsize=14, fontweight='bold', pad=15)
+ax.grid(True, alpha=0.2, linestyle=':', axis='y')
+ax.legend(loc='upper right', fontsize=11)
+ax.xaxis.set_major_formatter(plt.FuncFormatter(lambda x, _: f'{x:.1%}'))
+ax.set_facecolor('#fafafa')
+
+plt.tight_layout()
+plt.show()
+```
+
+# Usage Guide
+
+## Interactive Dashboard
+
+The SOVRUN portfolio analytics system includes a Streamlit web application for interactive portfolio construction.
+
+### Installation
+
+```bash
+# Clone repository
+git clone https://github.com/mosaicrob/sites.git
+cd sites
+
+# Install dependencies
+pip3 install -r requirements.txt
+
+# Launch dashboard
+export PATH="$HOME/Library/Python/3.9/bin:$PATH"
+streamlit run portfolio_dashboard_v2.py
+```
+
+### Dashboard Features
+
+1. **Portfolio Configuration**
+   - Total Investment slider
+   - Maximum Leverage selector (100%-300%)
+   - Risk Appetite filter
+
+2. **Strategy Selection**
+   - Vertical list of eligible strategies
+   - Unit quantity selectors
+   - Real-time allocation updates
+
+3. **Analytics Display**
+   - 12 key metrics in brilliant gradient boxes
+   - Cumulative returns chart vs S&P 500
+   - Max drawdown and average return annotations
+
+4. **Export Options**
+   - High-resolution PNG download
+   - PDF export capability (requires installed PDF skill)
+
+## Programmatic Access
+
+### Python API
+
+```python
+from portfolio_calculator import load_strategy_data, calculate_portfolio_metrics
+from chart_generator import generate_analytics_image
+
+# Load data
+data = load_strategy_data("strategy-returns.xlsx")
+
+# Define allocation
+unit_selections = {
+    'DELTA S&P': 1,
+    'GAMMA S&P': 2,
+}
+
+# Calculate metrics
+portfolio = calculate_portfolio_metrics(
+    unit_selections,
+    data['strategies'],
+    data['monthly_returns'],
+    max_leverage=200
+)
+
+# Generate image
+image_path = generate_analytics_image(
+    portfolio,
+    unit_selections,
+    data['strategies'],
+    data['monthly_returns'],
+    total_investment=1000000
+)
+
+print(f"Analytics saved to: {image_path}")
+```
+
+# Risk Considerations
+
+## Leverage Constraints
+
+The system enforces maximum leverage limits to prevent excessive risk:
+
+- **100% Leverage**: No additional exposure beyond allocated capital
+- **150% Leverage**: Moderate additional exposure (1.5x)
+- **200% Leverage**: Significant additional exposure (2x)
+- **300% Leverage**: Maximum allowed exposure (3x)
+
+::: {.callout-warning}
+## Leverage Risk
+
+Higher leverage amplifies both gains and losses. Ensure you understand the implications of leveraged trading before allocating capital.
+:::
+
+## Drawdown Monitoring
+
+Maximum drawdown represents the largest peak-to-valley decline in portfolio value. The system provides four risk tolerance levels:
+
+::: {.callout-note}
+## Risk Appetite Levels
+
+- **S&P Level**: Matches S&P 500 historical drawdown (~20-25%)
+- **<20%**: Moderate risk tolerance
+- **<10%**: Conservative risk tolerance
+- **<5%**: Very conservative risk tolerance
+:::
+
+## Correlation Risk
+
+While the system allocates across multiple strategies, correlation between strategies may increase during market stress periods. Diversification does not eliminate all risk.
+
+# Technical Implementation
+
+## Architecture
+
+```mermaid
+graph TD
+    A[strategy-returns.xlsx] --> B[portfolio_calculator.py]
+    B --> C[portfolio_dashboard_v2.py]
+    B --> D[chart_generator.py]
+    C --> E[Streamlit Web UI]
+    D --> F[PNG Analytics Image]
+    E --> F
+```
+
+## Data Flow
+
+1. **Data Loading**: `portfolio_calculator.py` reads `strategy-returns.xlsx`
+2. **User Input**: Streamlit dashboard collects allocation preferences
+3. **Calculation**: Portfolio metrics computed with margin equity factors
+4. **Visualization**: `chart_generator.py` creates analytics dashboard image
+5. **Export**: High-resolution PNG saved and downloadable
+
+## File Structure
+
+```
+portfolio-builder/
+├── strategy-returns.xlsx           # Source data (9 strategies)
+├── portfolio_dashboard_v2.py       # Main Streamlit app
+├── portfolio_calculator.py         # Calculation engine
+├── chart_generator.py              # Image generation
+├── portfolio_analytics.qmd         # This document
+├── requirements.txt                # Python dependencies
+├── assets/
+│   └── sovrun_logo_pro.svg        # SOVRUN branding
+└── VEGA Returns/
+    ├── analyze_returns.py          # Performance statistics
+    └── *.csv                       # Strategy data files
+```
+
+# Appendix
+
+## Strategy Descriptions
+
+### DELTA S&P
+Conservative strategy with lowest drawdown profile. Ideal for risk-averse allocators.
+
+### GAMMA S&P
+Balanced risk-return profile with moderate drawdown and consistent performance.
+
+### VEGA Variants
+Four variants (LE DN, LE UP, SE DN, SE UP) providing directional and volatility exposure.
+
+### WAVE Strategies
+WAVE1 and WAVE2 provide complementary market regime coverage.
+
+### BS ATLAS, AURORA, GEMINI
+Blue Sky strategies with varying risk-return characteristics.
+
+### VECTOR APEX ES
+High-performance strategy with elevated risk profile.
+
+## References
+
+- TradeStation Performance Report Format Documentation
+- Portfolio Optimization Theory (Markowitz, 1952)
+- Risk-Adjusted Performance Metrics (Sharpe, Sortino, Calmar)
+- SOVRUN Education: [sovrun.io](https://sovrun.io)
+
+## Changelog
+
+- **2026-02-07**: Initial QMD documentation created
+- Integration with Streamlit dashboard v2
+- Added example portfolio analyses
+- Included performance visualizations
+
+---
+
+**SOVRUN Education** | Risk-First Investing
+For questions or support, visit [sovrun.io](https://sovrun.io)

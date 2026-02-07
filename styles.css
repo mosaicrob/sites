@@ -1,0 +1,223 @@
+/* SOVRUN Portfolio Analytics Custom Styles */
+
+:root {
+  --primary-blue: #4a90e2;
+  --light-blue: #5ba2f0;
+  --dark-blue: #1e3a5f;
+  --accent-orange: #ff8c42;
+  --accent-green: #2ecc71;
+  --bg-dark: #1a1a1a;
+  --bg-medium: #2d2d2d;
+  --text-light: #f1f5f9;
+  --text-medium: #c5e3ff;
+}
+
+/* Global Styles */
+body {
+  font-family: 'Aptos', 'Calibri', 'Helvetica Neue', sans-serif;
+  background-color: var(--bg-dark);
+  color: var(--text-light);
+}
+
+/* Headers */
+h1, h2, h3, h4, h5, h6 {
+  color: var(--light-blue);
+  font-weight: 700;
+}
+
+h1 {
+  border-bottom: 3px solid var(--accent-orange);
+  padding-bottom: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+h2 {
+  border-bottom: 2px solid var(--primary-blue);
+  padding-bottom: 0.4rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+/* Code Blocks */
+pre {
+  background-color: var(--bg-medium) !important;
+  border-left: 4px solid var(--primary-blue);
+  border-radius: 6px;
+  padding: 1rem;
+}
+
+code {
+  color: var(--light-blue);
+  background-color: rgba(74, 144, 226, 0.15);
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  font-size: 0.9em;
+}
+
+/* Tables */
+table {
+  background-color: var(--bg-medium);
+  border-collapse: collapse;
+  width: 100%;
+  margin: 1.5rem 0;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+thead {
+  background: linear-gradient(135deg, rgba(30, 58, 95, 0.8) 0%, rgba(74, 144, 226, 0.6) 100%);
+}
+
+th {
+  color: var(--text-light);
+  font-weight: 700;
+  padding: 1rem;
+  text-align: left;
+  border-bottom: 2px solid var(--primary-blue);
+}
+
+td {
+  padding: 0.8rem 1rem;
+  border-bottom: 1px solid rgba(74, 144, 226, 0.2);
+  color: var(--text-medium);
+}
+
+tr:hover {
+  background-color: rgba(74, 144, 226, 0.1);
+}
+
+/* Callout Boxes */
+.callout {
+  border-left: 4px solid var(--primary-blue);
+  background-color: rgba(74, 144, 226, 0.1);
+  border-radius: 6px;
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+}
+
+.callout-warning {
+  border-left-color: var(--accent-orange);
+  background-color: rgba(255, 140, 66, 0.1);
+}
+
+.callout-note {
+  border-left-color: var(--light-blue);
+  background-color: rgba(91, 162, 240, 0.1);
+}
+
+.callout-title {
+  color: var(--light-blue);
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+/* Links */
+a {
+  color: var(--light-blue);
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-bottom 0.2s ease;
+}
+
+a:hover {
+  color: var(--accent-orange);
+  border-bottom: 1px solid var(--accent-orange);
+}
+
+/* Figures and Charts */
+figure {
+  margin: 2rem 0;
+  padding: 1rem;
+  background-color: var(--bg-medium);
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+figcaption {
+  color: var(--text-medium);
+  font-style: italic;
+  margin-top: 0.5rem;
+  text-align: center;
+}
+
+/* Math Equations */
+.katex {
+  color: var(--text-light) !important;
+}
+
+.katex-display {
+  background-color: rgba(74, 144, 226, 0.05);
+  padding: 1rem;
+  border-radius: 6px;
+  margin: 1.5rem 0;
+}
+
+/* Blockquotes */
+blockquote {
+  border-left: 4px solid var(--accent-orange);
+  background-color: rgba(255, 140, 66, 0.1);
+  padding: 1rem 1.5rem;
+  margin: 1.5rem 0;
+  font-style: italic;
+  color: var(--text-medium);
+}
+
+/* Lists */
+ul, ol {
+  color: var(--text-medium);
+  line-height: 1.8;
+}
+
+li::marker {
+  color: var(--primary-blue);
+}
+
+/* Horizontal Rules */
+hr {
+  border: none;
+  border-top: 2px solid var(--primary-blue);
+  margin: 2rem 0;
+  opacity: 0.3;
+}
+
+/* TOC */
+#TOC {
+  background-color: var(--bg-medium);
+  border-radius: 8px;
+  padding: 1.5rem;
+  border-left: 4px solid var(--primary-blue);
+}
+
+#TOC ul {
+  list-style: none;
+  padding-left: 1rem;
+}
+
+#TOC li {
+  margin: 0.5rem 0;
+}
+
+#TOC a {
+  color: var(--text-medium);
+  border-bottom: none;
+}
+
+#TOC a:hover {
+  color: var(--light-blue);
+}
+
+/* Print Styles */
+@media print {
+  body {
+    background-color: white;
+    color: black;
+  }
+
+  h1, h2, h3 {
+    color: var(--dark-blue);
+  }
+
+  code, pre {
+    background-color: #f5f5f5;
+  }
+}

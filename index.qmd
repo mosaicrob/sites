@@ -1,0 +1,192 @@
+---
+title: "SOVRUN Portfolio Analytics"
+subtitle: "Risk-First Algorithmic Trading Strategy Platform"
+format:
+  html:
+    toc: false
+---
+
+![](assets/sovrun_logo_pro.svg){width=450px fig-align="center"}
+
+# Welcome to SOVRUN Portfolio Analytics
+
+A comprehensive platform for analyzing and constructing portfolios of algorithmic futures trading strategies with risk-first principles.
+
+## Platform Overview
+
+::: {.grid}
+
+::: {.g-col-4}
+### 📊 Interactive Dashboard
+Streamlit web application with unit-based strategy selection, real-time analytics, and visual performance tracking.
+
+[Launch Dashboard](http://localhost:8501){.btn .btn-primary}
+:::
+
+::: {.g-col-4}
+### 📈 Analytics Report
+Comprehensive analysis document with methodology, examples, and visualizations.
+
+[View Analytics](portfolio_analytics.qmd){.btn .btn-primary}
+:::
+
+::: {.g-col-4}
+### 💻 GitHub Repository
+Access the full codebase, documentation, and data files.
+
+[View on GitHub](https://github.com/mosaicrob/sites){.btn .btn-primary}
+:::
+
+:::
+
+## Key Features
+
+:::: {.columns}
+
+::: {.column width="50%"}
+### Unit-Based Allocation
+- Simplified position sizing
+- 1 unit = strategy total equity
+- Clear capital allocation
+
+### Cross-Margining
+- Variable margin requirements (15%-50%)
+- Optimized capital efficiency
+- Leverage constraints (100%-300%)
+:::
+
+::: {.column width="50%"}
+### Risk-Based Filtering
+- S&P 500 drawdown level
+- <20% peak-to-valley
+- <10% peak-to-valley
+- <5% peak-to-valley
+
+### Real-Time Analytics
+- 12 portfolio-level metrics
+- Benchmark comparisons
+- Export capabilities
+:::
+
+::::
+
+## Trading Strategies
+
+The platform tracks **9 active algorithmic strategies** trading ES (S&P 500 E-mini) futures:
+
+| Strategy | Type | Characteristics |
+|----------|------|-----------------|
+| **DELTA S&P** | Conservative | Lowest drawdown profile |
+| **GAMMA S&P** | Balanced | Moderate risk-return |
+| **VEGA Variants** | Volatility | 4 variants (LE/SE, DN/UP) |
+| **WAVE1 S&P** | Momentum | Regime-adaptive |
+| **WAVE2 S&P** | Momentum | Complementary coverage |
+| **BS ATLAS** | Blue Sky | Multi-factor |
+| **BS AURORA** | Blue Sky | Trend-following |
+| **BS GEMINI** | Blue Sky | Mean reversion |
+| **VECTOR APEX ES** | Aggressive | High-performance |
+
+## Performance Metrics
+
+The system calculates **12 comprehensive metrics**:
+
+::: {.panel-tabset}
+
+### Core Statistics
+- Total Equity
+- Total Trades
+- Winning Trades
+- Losing Trades
+
+### Trade Analytics
+- Average Winner
+- Average Loser
+- Average Net
+- Win Rate
+
+### Risk-Adjusted Returns
+- Sharpe Ratio
+- Sortino Ratio
+- Calmar Ratio
+- Maximum Drawdown
+
+:::
+
+## Quick Start
+
+### 1. Install Dependencies
+
+```bash
+pip3 install -r requirements.txt
+```
+
+### 2. Launch Dashboard
+
+```bash
+export PATH="$HOME/Library/Python/3.9/bin:$PATH"
+streamlit run portfolio_dashboard_v2.py
+```
+
+Open [http://localhost:8501](http://localhost:8501) in your browser.
+
+### 3. Explore Analytics
+
+View the comprehensive [Portfolio Analytics Report](portfolio_analytics.qmd) for methodology, examples, and visualizations.
+
+## Documentation
+
+- [README.md](README.md) - Project overview and structure
+- [CLAUDE.md](CLAUDE.md) - Technical implementation guide
+- [Portfolio Dashboard Documentation](PORTFOLIO_DASHBOARD_README.md)
+- [VEGA Strategy Analysis](VEGA%20Returns/CLAUDE.md)
+
+## Technology Stack
+
+- **Frontend**: Streamlit web framework
+- **Backend**: Python 3.9+
+- **Data**: Pandas, NumPy, OpenPyXL
+- **Visualization**: Matplotlib, Plotly
+- **Documentation**: Quarto Markdown
+- **Version Control**: Git
+
+## Claude Code Skills
+
+The project utilizes **7 installed skills**:
+
+1. **portfolio-optimization** - High-performance calculations
+2. **portfolio-analyzer** - Financial analysis and risk assessment
+3. **ui-ux-pro-max** - Professional UI/UX design
+4. **ai-image-generation** - Analytics visualization
+5. **pdf** - PDF export capabilities
+6. **nano-banana-pro** - AI image generation (Gemini)
+7. **nano-banana** - Professional graphics via Gemini CLI
+
+## Risk Disclosure
+
+::: {.callout-warning}
+## Important Risk Information
+
+Trading futures involves substantial risk of loss and is not suitable for all investors. Past performance is not indicative of future results. The strategies and analytics provided are for educational purposes only and do not constitute investment advice.
+
+**Key Risks:**
+- Leverage amplifies both gains and losses
+- Market volatility can cause rapid account equity changes
+- Algorithmic strategies may underperform in changing market conditions
+- Diversification does not eliminate risk
+
+Please consult with a qualified financial advisor before allocating capital.
+:::
+
+## Contact & Support
+
+- **Website**: [sovrun.io](https://sovrun.io)
+- **GitHub Issues**: [Report a bug or request a feature](https://github.com/mosaicrob/sites/issues)
+- **Documentation**: View the [Analytics Report](portfolio_analytics.qmd) for detailed methodology
+
+---
+
+<center>
+**SOVRUN Education** | Risk-First Investing
+
+*Building sophisticated portfolio analytics for algorithmic traders*
+</center>

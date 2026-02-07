@@ -22,6 +22,14 @@ portfolio_analytics_*.png
 portfolio_analytics_*.jpg
 *.pdf
 
+# Quarto
+_site/
+_freeze/
+/.quarto/
+*_files/
+*.html
+!index.html
+
 # OS files
 .DS_Store
 .AppleDouble

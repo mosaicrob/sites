@@ -16,11 +16,17 @@ All strategies trade ES (S&P 500 E-mini) futures.
 ```
 portfolio-builder/
 ├── strategy-returns.xlsx           # Consolidated cross-strategy analysis (9 strategies)
-├── portfolio_dashboard.py          # 📊 Streamlit web app for portfolio analytics
+├── portfolio_dashboard_v2.py       # 📊 Streamlit web app (SOVRUN branded)
 ├── portfolio_calculator.py         # Portfolio calculation engine
 ├── chart_generator.py              # Analytics image generator
+├── portfolio_analytics.qmd         # 📄 Quarto analytics report
+├── index.qmd                       # Quarto homepage
+├── _quarto.yml                     # Quarto configuration
+├── styles.css                      # Custom CSS styling
 ├── requirements.txt                # Python dependencies
 ├── PORTFOLIO_DASHBOARD_README.md   # Dashboard documentation
+├── assets/
+│   └── sovrun_logo_pro.svg        # SOVRUN branding logo
 ├── VEGA Returns/
 │   ├── analyze_returns.py          # Performance statistics generator
 │   ├── create_comparison.py        # EasyLanguage vs Python validation
@@ -77,6 +83,44 @@ Results:
 - Effective Leverage: 45%
 
 See `PORTFOLIO_DASHBOARD_README.md` for full documentation.
+
+## Quarto Documentation (NEW)
+
+Comprehensive analytics report with methodology, examples, and visualizations built with Quarto Markdown.
+
+### Quick Start
+
+```bash
+# Install Quarto (if not already installed)
+# Visit https://quarto.org/docs/get-started/
+
+# Render single document
+quarto render portfolio_analytics.qmd
+
+# Build full website
+quarto render
+
+# Preview website locally
+quarto preview
+```
+
+Open http://localhost:4200 in your browser.
+
+### Features
+
+- **Comprehensive Methodology** - Portfolio construction framework and calculations
+- **Interactive Examples** - Python code blocks with live execution
+- **Performance Visualizations** - Cumulative returns, monthly distributions, risk metrics
+- **Risk Analysis** - Leverage constraints, drawdown monitoring, correlation risk
+- **Technical Documentation** - Architecture, data flow, file structure
+- **Export Formats** - HTML website, PDF reports
+
+### Output Formats
+
+- **HTML**: Interactive website with navigation, charts, and code folding
+- **PDF**: Professional reports with formatted equations and tables
+
+The Quarto documentation integrates with the Streamlit dashboard and provides in-depth analysis using the same `portfolio_calculator.py` engine.
 
 ## Analysis Scripts
 

@@ -1,0 +1,64 @@
+project:
+  type: website
+  output-dir: _site
+
+website:
+  title: "SOVRUN Portfolio Analytics"
+  navbar:
+    background: "#1e3a5f"
+    foreground: "#f1f5f9"
+    logo: "assets/sovrun_logo_pro.svg"
+    left:
+      - text: "Home"
+        file: index.qmd
+      - text: "Analytics"
+        file: portfolio_analytics.qmd
+      - text: "Dashboard"
+        href: "http://localhost:8501"
+    right:
+      - icon: github
+        href: https://github.com/mosaicrob/sites
+        aria-label: GitHub
+
+  page-footer:
+    background: "#1e3a5f"
+    foreground: "#f1f5f9"
+    center: "© 2026 SOVRUN Education. All rights reserved."
+
+format:
+  html:
+    theme:
+      light: [cosmo, styles.css]
+      dark: [darkly, styles.css]
+    toc: true
+    toc-depth: 3
+    toc-location: left
+    code-fold: true
+    code-tools: true
+    code-copy: true
+    number-sections: true
+    anchor-sections: true
+    smooth-scroll: true
+    css: styles.css
+
+  pdf:
+    documentclass: article
+    toc: true
+    number-sections: true
+    colorlinks: true
+    geometry:
+      - margin=1in
+    fontfamily: mathpazo
+    fontsize: 11pt
+
+execute:
+  freeze: auto
+  echo: true
+  warning: false
+  message: false
+  cache: true
+
+editor: visual
+
+bibliography: references.bib
+csl: apa.csl
