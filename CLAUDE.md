@@ -132,6 +132,15 @@ The following Claude Code skills are available (installed in `.agents/skills/`):
 - **ai-image-generation** - Analytics visualization generation for creating high-quality dashboard images and charts.
   - Source: `https://github.com/inference-sh/skills`
 
+- **pdf** - PDF generation and manipulation. Enables export of portfolio analytics as PDF documents.
+  - Source: `https://github.com/anthropics/skills`
+
+- **nano-banana-pro** - AI image generation using Google's Nano Banana Pro (Gemini 3 Pro Image) API. Supports text-to-image generation and image editing with configurable resolution (1K, 2K, 4K). Requires GEMINI_API_KEY.
+  - Source: `https://github.com/intellectronica/agent-skills`
+
+- **nano-banana** - Image generation and editing via Gemini CLI's nanobanana extension. Professional image generation for logos, featured images, thumbnails, diagrams, and visual assets. Requires Gemini CLI installed.
+  - Source: `https://github.com/kkoppenhaver/cc-nano-banana`
+
 ### Additional Skills Available
 
 ```bash

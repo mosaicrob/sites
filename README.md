@@ -126,6 +126,21 @@ The following skills are already installed in `.agents/skills/`:
   npx skills add https://github.com/inference-sh/skills --skill ai-image-generation
   ```
 
+- ✅ **pdf** - PDF generation and manipulation for exporting analytics
+  ```bash
+  npx skills add https://github.com/anthropics/skills --skill pdf
+  ```
+
+- ✅ **nano-banana-pro** - AI image generation using Gemini 3 Pro Image API (requires GEMINI_API_KEY)
+  ```bash
+  npx skills add https://github.com/intellectronica/agent-skills --skill nano-banana-pro
+  ```
+
+- ✅ **nano-banana** - Professional image generation via Gemini CLI (requires Gemini CLI installed)
+  ```bash
+  npx skills add https://github.com/kkoppenhaver/cc-nano-banana --skill nano-banana
+  ```
+
 ### Additional Skills Available
 
 ```bash
