@@ -109,10 +109,10 @@ $$\text{Calmar} = \frac{\text{CAGR}}{\text{Maximum Drawdown}}$$
 
 ## Example Portfolio Analysis
 
-### Conservative Portfolio (<5% Drawdown)
+### Conservative Portfolio (<10% Drawdown)
 
 ```{python}
-from portfolio_calculator import calculate_portfolio_metrics, filter_strategies_by_risk
+from portfolio_calculator import calculate_portfolio_metrics
 
 # Load data
 data = load_strategy_data("strategy-returns.xlsx")
@@ -120,7 +120,7 @@ all_strategies = data['strategies']
 monthly_returns = data['monthly_returns']
 
 # Filter by risk
-risk_appetite = 0.05  # 5% max drawdown
+risk_appetite = 0.10  # 10% max drawdown
 eligible_strategies = [s for s in all_strategies if abs(s['max_drawdown']) <= risk_appetite]
 
 print(f"\n**Eligible Strategies:** {len(eligible_strategies)}")
@@ -154,21 +154,26 @@ print(f"  - Sharpe Ratio: {portfolio['sharpe_ratio']:.2f}")
 print(f"  - Calmar Ratio: {portfolio['calmar_ratio']:.2f}")
 ```
 
-### Balanced Portfolio (<10% Drawdown)
+### Balanced Portfolio (<20% Drawdown)
 
 ```{python}
-# Filter for <10% drawdown
-risk_appetite = 0.10
+# Filter for <20% drawdown
+risk_appetite = 0.20
 eligible_strategies = [s for s in all_strategies if abs(s['max_drawdown']) <= risk_appetite]
 
 print(f"\n**Eligible Strategies:** {len(eligible_strategies)}")
+for s in eligible_strategies[:5]:
+    print(f"  - {s['name']} (Drawdown: {s['max_drawdown']:.2%})")
 
-# Diversified allocation
-unit_selections = {
-    'DELTA S&P': 1,
-    'GAMMA S&P': 2,
-    'WAVE2 S&P': 1,
-}
+# Diversified allocation - select from eligible strategies
+selected_strategies = sorted(eligible_strategies, key=lambda x: abs(x['max_drawdown']))[:3]
+unit_selections = {}
+for i, s in enumerate(selected_strategies):
+    unit_selections[s['name']] = 2 if i == 0 else 1
+
+print(f"\n**Selected Units:**")
+for name, units in unit_selections.items():
+    print(f"  - {name}: {units} unit(s)")
 
 # Calculate metrics
 portfolio = calculate_portfolio_metrics(

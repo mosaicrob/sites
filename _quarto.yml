@@ -27,9 +27,7 @@ website:
 
 format:
   html:
-    theme:
-      light: [cosmo, styles.css]
-      dark: [darkly, styles.css]
+    theme: cosmo
     toc: true
     toc-depth: 3
     toc-location: left
@@ -59,6 +57,3 @@ execute:
   cache: true
 
 editor: visual
-
-bibliography: references.bib
-csl: apa.csl

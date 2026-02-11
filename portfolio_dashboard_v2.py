@@ -77,12 +77,17 @@ st.markdown("""
     }
 
     .input-section h3 {
-        color: #c5e3ff;
+        color: #e0f2fe !important;
         font-size: 1.2rem;
         font-weight: 600;
         margin-bottom: 1.5rem;
         padding-bottom: 0;
         letter-spacing: 0.5px;
+    }
+
+    /* Override Streamlit's default header colors */
+    h1, h2, h3, h4, h5, h6 {
+        color: #e0f2fe !important;
     }
 
     /* Strategy cards */

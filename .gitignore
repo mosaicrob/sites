@@ -88,3 +88,5 @@ temp/
 # Testing images
 RemovetheBOX.png
 RemoveTheBoxes.png
+
+**/*.quarto_ipynb
