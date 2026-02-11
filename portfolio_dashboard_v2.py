@@ -29,7 +29,7 @@ def load_svg(svg_path):
     with open(svg_path, "r") as f:
         svg = f.read()
     b64 = base64.b64encode(svg.encode('utf-8')).decode("utf-8")
-    return f'<img src="data:image/svg+xml;base64,{b64}" style="height: 60px;"/>'
+    return f'<img src="data:image/svg+xml;base64,{b64}" style="height: 180px;"/>'
 
 # Custom CSS - Dark theme with blue hues
 st.markdown("""
@@ -285,10 +285,11 @@ if 'image_path' not in st.session_state:
 # Header
 logo_path = Path("assets/sovrun_logo_pro.svg")
 if logo_path.exists():
-    col1, col2 = st.columns([1, 5])
+    col1, col2 = st.columns([2, 4])
     with col1:
         st.markdown(load_svg(logo_path), unsafe_allow_html=True)
     with col2:
+        st.markdown('<br><br>', unsafe_allow_html=True)
         st.markdown('<div class="sovrun-tagline">Self-Directed Investment Platform | Risk-First Portfolio Allocation</div>', unsafe_allow_html=True)
 else:
     st.markdown('<h1 style="color: #4a90e2; font-weight: 700;">SOVRUN</h1>', unsafe_allow_html=True)
