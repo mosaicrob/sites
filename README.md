@@ -195,6 +195,31 @@ The following skills are already installed in `.agents/skills/`:
   npx skills add https://github.com/julianromli/ai-skills --skill clone-website
   ```
 
+- ✅ **premium_web_design** - Professional website templates and modern design systems
+  ```bash
+  npx skills add https://github.com/jerrar670/surf-website --skill premium_web_design
+  ```
+
+- ✅ **content-research-writer** - High-quality copywriting and content strategy
+  ```bash
+  npx skills add https://github.com/davila7/claude-code-templates --skill content-research-writer
+  ```
+
+- ✅ **marketing-psychology** - Persuasive design principles and psychological triggers
+  ```bash
+  npx skills add https://github.com/coreyhaines31/marketingskills --skill marketing-psychology
+  ```
+
+- ✅ **roier-seo** - SEO optimization for better search engine visibility
+  ```bash
+  npx skills add https://github.com/davila7/claude-code-templates --skill roier-seo
+  ```
+
+- ✅ **web-performance-optimization** - Page speed optimization and Core Web Vitals
+  ```bash
+  npx skills add https://github.com/davila7/claude-code-templates --skill web-performance-optimization
+  ```
+
 ### Additional Skills Available
 
 ```bash

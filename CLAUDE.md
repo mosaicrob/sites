@@ -180,6 +180,21 @@ The following Claude Code skills are available (installed in `.agents/skills/`):
 - **clone-website** - Clone and replicate website structures, layouts, and designs. Useful for analyzing competitor sites or recreating design patterns.
   - Source: `https://github.com/julianromli/ai-skills`
 
+- **premium_web_design** - Professional website templates and modern design systems. Provides pre-built patterns for creating high-quality websites.
+  - Source: `https://github.com/jerrar670/surf-website`
+
+- **content-research-writer** - High-quality copywriting and content strategy. Generates professional content with research-backed approaches.
+  - Source: `https://github.com/davila7/claude-code-templates`
+
+- **marketing-psychology** - Persuasive design principles and psychological triggers for effective marketing. Applies behavioral psychology to design decisions.
+  - Source: `https://github.com/coreyhaines31/marketingskills`
+
+- **roier-seo** - SEO optimization for better search engine visibility. Implements SEO best practices, meta tags, and structured data.
+  - Source: `https://github.com/davila7/claude-code-templates`
+
+- **web-performance-optimization** - Page speed optimization and Core Web Vitals improvements. Focuses on performance metrics and user experience.
+  - Source: `https://github.com/davila7/claude-code-templates`
+
 ### Additional Skills Available
 
 ```bash
