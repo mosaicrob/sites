@@ -174,6 +174,12 @@ The following Claude Code skills are available (installed in `.agents/skills/`):
 - **nano-banana** - Image generation and editing via Gemini CLI's nanobanana extension. Professional image generation for logos, featured images, thumbnails, diagrams, and visual assets. Requires Gemini CLI installed.
   - Source: `https://github.com/kkoppenhaver/cc-nano-banana`
 
+- **ai-avatar-video** - AI avatar video generation for creating professional video content with talking avatars and presentations.
+  - Source: `https://github.com/inference-sh/skills`
+
+- **clone-website** - Clone and replicate website structures, layouts, and designs. Useful for analyzing competitor sites or recreating design patterns.
+  - Source: `https://github.com/julianromli/ai-skills`
+
 ### Additional Skills Available
 
 ```bash

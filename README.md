@@ -185,6 +185,16 @@ The following skills are already installed in `.agents/skills/`:
   npx skills add https://github.com/kkoppenhaver/cc-nano-banana --skill nano-banana
   ```
 
+- ✅ **ai-avatar-video** - AI avatar video generation for creating professional video content
+  ```bash
+  npx skills add https://github.com/inference-sh/skills --skill ai-avatar-video
+  ```
+
+- ✅ **clone-website** - Clone and replicate website structures and designs
+  ```bash
+  npx skills add https://github.com/julianromli/ai-skills --skill clone-website
+  ```
+
 ### Additional Skills Available
 
 ```bash
