@@ -1,0 +1,910 @@
+% Options for packages loaded elsewhere
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\PassOptionsToPackage{dvipsnames,svgnames,x11names}{xcolor}
+%
+\documentclass[
+  11pt,
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{5}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage[]{mathpazo}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+% Make \paragraph and \subparagraph free-standing
+\makeatletter
+\ifx\paragraph\undefined\else
+  \let\oldparagraph\paragraph
+  \renewcommand{\paragraph}{
+    \@ifstar
+      \xxxParagraphStar
+      \xxxParagraphNoStar
+  }
+  \newcommand{\xxxParagraphStar}[1]{\oldparagraph*{#1}\mbox{}}
+  \newcommand{\xxxParagraphNoStar}[1]{\oldparagraph{#1}\mbox{}}
+\fi
+\ifx\subparagraph\undefined\else
+  \let\oldsubparagraph\subparagraph
+  \renewcommand{\subparagraph}{
+    \@ifstar
+      \xxxSubParagraphStar
+      \xxxSubParagraphNoStar
+  }
+  \newcommand{\xxxSubParagraphStar}[1]{\oldsubparagraph*{#1}\mbox{}}
+  \newcommand{\xxxSubParagraphNoStar}[1]{\oldsubparagraph{#1}\mbox{}}
+\fi
+\makeatother
+
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{241,243,245}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.40,0.45,0.13}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\BuiltInTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\ExtensionTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.28,0.35,0.67}{#1}}
+\newcommand{\ImportTok}[1]{\textcolor[rgb]{0.00,0.46,0.62}{#1}}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.68,0.00,0.00}{#1}}
+\newcommand{\RegionMarkerTok}[1]{\textcolor[rgb]{0.00,0.23,0.31}{#1}}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.07,0.07,0.07}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.13,0.47,0.30}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.37,0.37,0.37}{\textit{#1}}}
+
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+
+
+
+
+
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+
+
+
+ 
+
+
+\makeatletter
+\@ifpackageloaded{tcolorbox}{}{\usepackage[skins,breakable]{tcolorbox}}
+\@ifpackageloaded{fontawesome5}{}{\usepackage{fontawesome5}}
+\definecolor{quarto-callout-color}{HTML}{909090}
+\definecolor{quarto-callout-note-color}{HTML}{0758E5}
+\definecolor{quarto-callout-important-color}{HTML}{CC1914}
+\definecolor{quarto-callout-warning-color}{HTML}{EB9113}
+\definecolor{quarto-callout-tip-color}{HTML}{00A047}
+\definecolor{quarto-callout-caution-color}{HTML}{FC5300}
+\definecolor{quarto-callout-color-frame}{HTML}{acacac}
+\definecolor{quarto-callout-note-color-frame}{HTML}{4582ec}
+\definecolor{quarto-callout-important-color-frame}{HTML}{d9534f}
+\definecolor{quarto-callout-warning-color-frame}{HTML}{f0ad4e}
+\definecolor{quarto-callout-tip-color-frame}{HTML}{02b875}
+\definecolor{quarto-callout-caution-color-frame}{HTML}{fd7e14}
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\AtBeginDocument{%
+\ifdefined\contentsname
+  \renewcommand*\contentsname{Table of contents}
+\else
+  \newcommand\contentsname{Table of contents}
+\fi
+\ifdefined\listfigurename
+  \renewcommand*\listfigurename{List of Figures}
+\else
+  \newcommand\listfigurename{List of Figures}
+\fi
+\ifdefined\listtablename
+  \renewcommand*\listtablename{List of Tables}
+\else
+  \newcommand\listtablename{List of Tables}
+\fi
+\ifdefined\figurename
+  \renewcommand*\figurename{Figure}
+\else
+  \newcommand\figurename{Figure}
+\fi
+\ifdefined\tablename
+  \renewcommand*\tablename{Table}
+\else
+  \newcommand\tablename{Table}
+\fi
+}
+\@ifpackageloaded{float}{}{\usepackage{float}}
+\floatstyle{ruled}
+\@ifundefined{c@chapter}{\newfloat{codelisting}{h}{lop}}{\newfloat{codelisting}{h}{lop}[chapter]}
+\floatname{codelisting}{Listing}
+\newcommand*\listoflistings{\listof{codelisting}{List of Listings}}
+\makeatother
+\makeatletter
+\makeatother
+\makeatletter
+\@ifpackageloaded{caption}{}{\usepackage{caption}}
+\@ifpackageloaded{subcaption}{}{\usepackage{subcaption}}
+\makeatother
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={SOVRUN Portfolio Analytics},
+  pdfauthor={SOVRUN Education},
+  colorlinks=true,
+  linkcolor={blue},
+  filecolor={Maroon},
+  citecolor={Blue},
+  urlcolor={Blue},
+  pdfcreator={LaTeX via pandoc}}
+
+
+\title{SOVRUN Portfolio Analytics}
+\usepackage{etoolbox}
+\makeatletter
+\providecommand{\subtitle}[1]{% add subtitle to \maketitle
+  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
+}
+\makeatother
+\subtitle{Risk-First Algorithmic Trading Strategy Analysis}
+\author{SOVRUN Education}
+\date{2026-02-10}
+\begin{document}
+\maketitle
+
+\renewcommand*\contentsname{Table of contents}
+{
+\hypersetup{linkcolor=}
+\setcounter{tocdepth}{3}
+\tableofcontents
+}
+
+\section{Executive Summary}\label{executive-summary}
+
+This document provides a comprehensive analysis of the SOVRUN portfolio
+analytics system, which enables risk-based allocation across multiple
+algorithmic futures trading strategies. The system implements a
+unit-based allocation framework with cross-margining capabilities,
+allowing investors to construct portfolios that align with their risk
+tolerance and leverage constraints.
+
+\subsection{Key Features}\label{key-features}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{9 Trading Strategies}: Active algorithms trading ES (S\&P 500
+  E-mini) futures
+\item
+  \textbf{Risk-Based Filtering}: Strategies filtered by maximum drawdown
+  thresholds
+\item
+  \textbf{Unit-Based Allocation}: Simplified position sizing (1 unit =
+  strategy total equity)
+\item
+  \textbf{Cross-Margining}: Variable margin requirements per strategy
+  (15\%-50\%)
+\item
+  \textbf{Real-Time Analytics}: 12 portfolio-level metrics calculated
+  instantly
+\item
+  \textbf{Benchmark Comparison}: Performance tracked against S\&P 500
+\end{itemize}
+
+\section{Methodology}\label{methodology}
+
+\subsection{Portfolio Construction
+Framework}\label{portfolio-construction-framework}
+
+\subsubsection{Unit-Based Allocation}\label{unit-based-allocation}
+
+The system uses a unit-based approach where each strategy has a defined
+unit size equal to its total equity requirement. Users select the number
+of units for each strategy:
+
+\[\text{Total Allocation} = \sum_{i=1}^{n} \text{units}_i \times \text{total\_equity}_i\]
+
+\subsubsection{Cross-Margining Model}\label{cross-margining-model}
+
+Each strategy has a unique margin equity factor reflecting its risk
+characteristics:
+
+\[\text{Required Equity} = \sum_{i=1}^{n} \text{units}_i \times \text{total\_equity}_i \times \text{margin\_equity}_i\]
+
+\textbf{Effective Leverage:}
+
+\[\text{Leverage} = \frac{\text{Required Equity}}{\text{Total Allocation}}\]
+
+\subsubsection{Risk Filtering}\label{risk-filtering}
+
+Strategies are filtered based on maximum drawdown tolerance:
+
+\begin{longtable}[]{@{}ll@{}}
+\toprule\noalign{}
+Risk Appetite & Max Drawdown Threshold \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+S\&P Level & Match S\&P 500 max drawdown \\
+\textless20\% Peak to Valley & 20\% maximum \\
+\textless10\% Peak to Valley & 10\% maximum \\
+\textless5\% Peak to Valley & 5\% maximum \\
+\end{longtable}
+
+\subsection{Performance Metrics}\label{performance-metrics}
+
+\subsubsection{Core Statistics}\label{core-statistics}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ pandas }\ImportTok{as}\NormalTok{ pd}
+\ImportTok{import}\NormalTok{ numpy }\ImportTok{as}\NormalTok{ np}
+\ImportTok{from}\NormalTok{ portfolio\_calculator }\ImportTok{import}\NormalTok{ load\_strategy\_data}
+
+\CommentTok{\# Load strategy data}
+\NormalTok{data }\OperatorTok{=}\NormalTok{ load\_strategy\_data(}\StringTok{"strategy{-}returns.xlsx"}\NormalTok{)}
+\NormalTok{strategies }\OperatorTok{=}\NormalTok{ data[}\StringTok{\textquotesingle{}strategies\textquotesingle{}}\NormalTok{]}
+
+\CommentTok{\# Display strategy overview}
+\NormalTok{strategy\_df }\OperatorTok{=}\NormalTok{ pd.DataFrame([}
+\NormalTok{    \{}
+        \StringTok{\textquotesingle{}Strategy\textquotesingle{}}\NormalTok{: s[}\StringTok{\textquotesingle{}name\textquotesingle{}}\NormalTok{],}
+        \StringTok{\textquotesingle{}Total Equity\textquotesingle{}}\NormalTok{: }\SpecialStringTok{f"$}\SpecialCharTok{\{}\NormalTok{s[}\StringTok{\textquotesingle{}total\_equity\textquotesingle{}}\NormalTok{]}\SpecialCharTok{:,.0f\}}\SpecialStringTok{"}\NormalTok{,}
+        \StringTok{\textquotesingle{}Margin Factor\textquotesingle{}}\NormalTok{: }\SpecialStringTok{f"}\SpecialCharTok{\{}\NormalTok{s[}\StringTok{\textquotesingle{}margin\_equity\textquotesingle{}}\NormalTok{]}\SpecialCharTok{:.1\%\}}\SpecialStringTok{"}\NormalTok{,}
+        \StringTok{\textquotesingle{}Max Drawdown\textquotesingle{}}\NormalTok{: }\SpecialStringTok{f"}\SpecialCharTok{\{}\NormalTok{s[}\StringTok{\textquotesingle{}max\_drawdown\textquotesingle{}}\NormalTok{]}\SpecialCharTok{:.2\%\}}\SpecialStringTok{"}\NormalTok{,}
+        \StringTok{\textquotesingle{}Sharpe Ratio\textquotesingle{}}\NormalTok{: }\SpecialStringTok{f"}\SpecialCharTok{\{}\NormalTok{s[}\StringTok{\textquotesingle{}sharpe\_ratio\textquotesingle{}}\NormalTok{]}\SpecialCharTok{:.2f\}}\SpecialStringTok{"}\NormalTok{,}
+        \StringTok{\textquotesingle{}CAGR\textquotesingle{}}\NormalTok{: }\SpecialStringTok{f"}\SpecialCharTok{\{}\NormalTok{s[}\StringTok{\textquotesingle{}average\_year\textquotesingle{}}\NormalTok{]}\SpecialCharTok{:.2\%\}}\SpecialStringTok{"}
+\NormalTok{    \}}
+    \ControlFlowTok{for}\NormalTok{ s }\KeywordTok{in}\NormalTok{ strategies}
+\NormalTok{])}
+
+\BuiltInTok{print}\NormalTok{(strategy\_df.to\_markdown(index}\OperatorTok{=}\VariableTok{False}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+| Strategy       | Total Equity   | Margin Factor   | Max Drawdown   |   Sharpe Ratio | CAGR   |
+|:---------------|:---------------|:----------------|:---------------|---------------:|:-------|
+| DELTA S&P      | $100,000       | 25.0%           | -15.43%        |           1.97 | 28.41% |
+| GAMMA S&P      | $100,000       | 25.0%           | -5.72%         |           1.86 | 15.30% |
+| VEGA S&P       | $100,000       | 35.0%           | -6.02%         |           1.78 | 16.47% |
+| WAVE1          | $200,000       | 50.0%           | -5.84%         |           3.27 | 28.42% |
+| WAVE2          | $200,000       | 50.0%           | -6.01%         |           2.24 | 17.91% |
+| BS ATLAS       | $100,000       | 20.0%           | -8.44%         |           1.75 | 16.30% |
+| BS AURORA      | $100,000       | 20.0%           | -6.49%         |           1.96 | 19.17% |
+| BS GEMINI      | $100,000       | 20.0%           | -8.47%         |           1.79 | 17.82% |
+| VECTOR APEX ES | $350,000       | 15.0%           | -14.93%        |           0.94 | 17.16% |
+\end{verbatim}
+
+\subsubsection{Risk-Adjusted Returns}\label{risk-adjusted-returns}
+
+The system calculates three key risk-adjusted metrics:
+
+\textbf{Sharpe Ratio:}
+\[\text{Sharpe} = \frac{\text{Average Return} - \text{Risk-Free Rate}}{\text{Standard Deviation}}\]
+
+\textbf{Sortino Ratio:}
+\[\text{Sortino} = \frac{\text{Average Return} - \text{Risk-Free Rate}}{\text{Downside Deviation}}\]
+
+\textbf{Calmar Ratio:}
+\[\text{Calmar} = \frac{\text{CAGR}}{\text{Maximum Drawdown}}\]
+
+\subsection{Example Portfolio
+Analysis}\label{example-portfolio-analysis}
+
+\subsubsection{Conservative Portfolio (\textless10\%
+Drawdown)}\label{conservative-portfolio-10-drawdown}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ portfolio\_calculator }\ImportTok{import}\NormalTok{ calculate\_portfolio\_metrics}
+
+\CommentTok{\# Load data}
+\NormalTok{data }\OperatorTok{=}\NormalTok{ load\_strategy\_data(}\StringTok{"strategy{-}returns.xlsx"}\NormalTok{)}
+\NormalTok{all\_strategies }\OperatorTok{=}\NormalTok{ data[}\StringTok{\textquotesingle{}strategies\textquotesingle{}}\NormalTok{]}
+\NormalTok{monthly\_returns }\OperatorTok{=}\NormalTok{ data[}\StringTok{\textquotesingle{}monthly\_returns\textquotesingle{}}\NormalTok{]}
+
+\CommentTok{\# Filter by risk}
+\NormalTok{risk\_appetite }\OperatorTok{=} \FloatTok{0.10}  \CommentTok{\# 10\% max drawdown}
+\NormalTok{eligible\_strategies }\OperatorTok{=}\NormalTok{ [s }\ControlFlowTok{for}\NormalTok{ s }\KeywordTok{in}\NormalTok{ all\_strategies }\ControlFlowTok{if} \BuiltInTok{abs}\NormalTok{(s[}\StringTok{\textquotesingle{}max\_drawdown\textquotesingle{}}\NormalTok{]) }\OperatorTok{\textless{}=}\NormalTok{ risk\_appetite]}
+
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"}\CharTok{\textbackslash{}n}\SpecialStringTok{**Eligible Strategies:** }\SpecialCharTok{\{}\BuiltInTok{len}\NormalTok{(eligible\_strategies)}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{ s }\KeywordTok{in}\NormalTok{ eligible\_strategies:}
+    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"  {-} }\SpecialCharTok{\{}\NormalTok{s[}\StringTok{\textquotesingle{}name\textquotesingle{}}\NormalTok{]}\SpecialCharTok{\}}\SpecialStringTok{ (Drawdown: }\SpecialCharTok{\{}\NormalTok{s[}\StringTok{\textquotesingle{}max\_drawdown\textquotesingle{}}\NormalTok{]}\SpecialCharTok{:.2\%\}}\SpecialStringTok{)"}\NormalTok{)}
+
+\CommentTok{\# Example allocation: 1 unit each of lowest drawdown strategies}
+\NormalTok{unit\_selections }\OperatorTok{=}\NormalTok{ \{\}}
+\ControlFlowTok{for}\NormalTok{ s }\KeywordTok{in} \BuiltInTok{sorted}\NormalTok{(eligible\_strategies, key}\OperatorTok{=}\KeywordTok{lambda}\NormalTok{ x: }\BuiltInTok{abs}\NormalTok{(x[}\StringTok{\textquotesingle{}max\_drawdown\textquotesingle{}}\NormalTok{]))[:}\DecValTok{3}\NormalTok{]:}
+\NormalTok{    unit\_selections[s[}\StringTok{\textquotesingle{}name\textquotesingle{}}\NormalTok{]] }\OperatorTok{=} \DecValTok{1}
+
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"}\CharTok{\textbackslash{}n}\SpecialStringTok{**Selected Units:**"}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{ name, units }\KeywordTok{in}\NormalTok{ unit\_selections.items():}
+    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"  {-} }\SpecialCharTok{\{}\NormalTok{name}\SpecialCharTok{\}}\SpecialStringTok{: }\SpecialCharTok{\{}\NormalTok{units}\SpecialCharTok{\}}\SpecialStringTok{ unit(s)"}\NormalTok{)}
+
+\CommentTok{\# Calculate portfolio metrics}
+\NormalTok{portfolio }\OperatorTok{=}\NormalTok{ calculate\_portfolio\_metrics(}
+\NormalTok{    unit\_selections,}
+\NormalTok{    all\_strategies,}
+\NormalTok{    monthly\_returns,}
+\NormalTok{    max\_leverage}\OperatorTok{=}\DecValTok{200}
+\NormalTok{)}
+
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"}\CharTok{\textbackslash{}n}\SpecialStringTok{**Portfolio Metrics:**"}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"  {-} Total Allocation: $}\SpecialCharTok{\{}\NormalTok{portfolio[}\StringTok{\textquotesingle{}total\_equity\textquotesingle{}}\NormalTok{]}\SpecialCharTok{:,.0f\}}\SpecialStringTok{"}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"  {-} Required Equity: $}\SpecialCharTok{\{}\NormalTok{portfolio[}\StringTok{\textquotesingle{}required\_equity\textquotesingle{}}\NormalTok{]}\SpecialCharTok{:,.0f\}}\SpecialStringTok{"}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"  {-} Effective Leverage: }\SpecialCharTok{\{}\NormalTok{portfolio[}\StringTok{\textquotesingle{}required\_equity\textquotesingle{}}\NormalTok{]}\OperatorTok{/}\NormalTok{portfolio[}\StringTok{\textquotesingle{}total\_equity\textquotesingle{}}\NormalTok{]}\SpecialCharTok{:.1\%\}}\SpecialStringTok{"}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"  {-} Max Drawdown: }\SpecialCharTok{\{}\NormalTok{portfolio[}\StringTok{\textquotesingle{}max\_drawdown\textquotesingle{}}\NormalTok{]}\SpecialCharTok{:.2\%\}}\SpecialStringTok{"}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"  {-} Average Annual Return: }\SpecialCharTok{\{}\NormalTok{portfolio[}\StringTok{\textquotesingle{}average\_year\textquotesingle{}}\NormalTok{]}\SpecialCharTok{:.2\%\}}\SpecialStringTok{"}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"  {-} Sharpe Ratio: }\SpecialCharTok{\{}\NormalTok{portfolio[}\StringTok{\textquotesingle{}sharpe\_ratio\textquotesingle{}}\NormalTok{]}\SpecialCharTok{:.2f\}}\SpecialStringTok{"}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"  {-} Calmar Ratio: }\SpecialCharTok{\{}\NormalTok{portfolio[}\StringTok{\textquotesingle{}calmar\_ratio\textquotesingle{}}\NormalTok{]}\SpecialCharTok{:.2f\}}\SpecialStringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+**Eligible Strategies:** 7
+  - GAMMA S&P (Drawdown: -5.72%)
+  - VEGA S&P (Drawdown: -6.02%)
+  - WAVE1 (Drawdown: -5.84%)
+  - WAVE2 (Drawdown: -6.01%)
+  - BS ATLAS (Drawdown: -8.44%)
+  - BS AURORA (Drawdown: -6.49%)
+  - BS GEMINI (Drawdown: -8.47%)
+
+**Selected Units:**
+  - GAMMA S&P: 1 unit(s)
+  - WAVE1: 1 unit(s)
+  - WAVE2: 1 unit(s)
+
+**Portfolio Metrics:**
+  - Total Allocation: $500,000
+  - Required Equity: $225,000
+  - Effective Leverage: 45.0%
+  - Max Drawdown: -1.70%
+  - Average Annual Return: 21.59%
+  - Sharpe Ratio: 2.58
+  - Calmar Ratio: 3.67
+\end{verbatim}
+
+\subsubsection{Balanced Portfolio (\textless20\%
+Drawdown)}\label{balanced-portfolio-20-drawdown}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Filter for \textless{}20\% drawdown}
+\NormalTok{risk\_appetite }\OperatorTok{=} \FloatTok{0.20}
+\NormalTok{eligible\_strategies }\OperatorTok{=}\NormalTok{ [s }\ControlFlowTok{for}\NormalTok{ s }\KeywordTok{in}\NormalTok{ all\_strategies }\ControlFlowTok{if} \BuiltInTok{abs}\NormalTok{(s[}\StringTok{\textquotesingle{}max\_drawdown\textquotesingle{}}\NormalTok{]) }\OperatorTok{\textless{}=}\NormalTok{ risk\_appetite]}
+
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"}\CharTok{\textbackslash{}n}\SpecialStringTok{**Eligible Strategies:** }\SpecialCharTok{\{}\BuiltInTok{len}\NormalTok{(eligible\_strategies)}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{ s }\KeywordTok{in}\NormalTok{ eligible\_strategies[:}\DecValTok{5}\NormalTok{]:}
+    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"  {-} }\SpecialCharTok{\{}\NormalTok{s[}\StringTok{\textquotesingle{}name\textquotesingle{}}\NormalTok{]}\SpecialCharTok{\}}\SpecialStringTok{ (Drawdown: }\SpecialCharTok{\{}\NormalTok{s[}\StringTok{\textquotesingle{}max\_drawdown\textquotesingle{}}\NormalTok{]}\SpecialCharTok{:.2\%\}}\SpecialStringTok{)"}\NormalTok{)}
+
+\CommentTok{\# Diversified allocation {-} select from eligible strategies}
+\NormalTok{selected\_strategies }\OperatorTok{=} \BuiltInTok{sorted}\NormalTok{(eligible\_strategies, key}\OperatorTok{=}\KeywordTok{lambda}\NormalTok{ x: }\BuiltInTok{abs}\NormalTok{(x[}\StringTok{\textquotesingle{}max\_drawdown\textquotesingle{}}\NormalTok{]))[:}\DecValTok{3}\NormalTok{]}
+\NormalTok{unit\_selections }\OperatorTok{=}\NormalTok{ \{\}}
+\ControlFlowTok{for}\NormalTok{ i, s }\KeywordTok{in} \BuiltInTok{enumerate}\NormalTok{(selected\_strategies):}
+\NormalTok{    unit\_selections[s[}\StringTok{\textquotesingle{}name\textquotesingle{}}\NormalTok{]] }\OperatorTok{=} \DecValTok{2} \ControlFlowTok{if}\NormalTok{ i }\OperatorTok{==} \DecValTok{0} \ControlFlowTok{else} \DecValTok{1}
+
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"}\CharTok{\textbackslash{}n}\SpecialStringTok{**Selected Units:**"}\NormalTok{)}
+\ControlFlowTok{for}\NormalTok{ name, units }\KeywordTok{in}\NormalTok{ unit\_selections.items():}
+    \BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"  {-} }\SpecialCharTok{\{}\NormalTok{name}\SpecialCharTok{\}}\SpecialStringTok{: }\SpecialCharTok{\{}\NormalTok{units}\SpecialCharTok{\}}\SpecialStringTok{ unit(s)"}\NormalTok{)}
+
+\CommentTok{\# Calculate metrics}
+\NormalTok{portfolio }\OperatorTok{=}\NormalTok{ calculate\_portfolio\_metrics(}
+\NormalTok{    unit\_selections,}
+\NormalTok{    all\_strategies,}
+\NormalTok{    monthly\_returns,}
+\NormalTok{    max\_leverage}\OperatorTok{=}\DecValTok{200}
+\NormalTok{)}
+
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"}\CharTok{\textbackslash{}n}\SpecialStringTok{**Portfolio Metrics:**"}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"  {-} Total Allocation: $}\SpecialCharTok{\{}\NormalTok{portfolio[}\StringTok{\textquotesingle{}total\_equity\textquotesingle{}}\NormalTok{]}\SpecialCharTok{:,.0f\}}\SpecialStringTok{"}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"  {-} Required Equity: $}\SpecialCharTok{\{}\NormalTok{portfolio[}\StringTok{\textquotesingle{}required\_equity\textquotesingle{}}\NormalTok{]}\SpecialCharTok{:,.0f\}}\SpecialStringTok{"}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"  {-} Effective Leverage: }\SpecialCharTok{\{}\NormalTok{portfolio[}\StringTok{\textquotesingle{}required\_equity\textquotesingle{}}\NormalTok{]}\OperatorTok{/}\NormalTok{portfolio[}\StringTok{\textquotesingle{}total\_equity\textquotesingle{}}\NormalTok{]}\SpecialCharTok{:.1\%\}}\SpecialStringTok{"}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"  {-} Total Trades: }\SpecialCharTok{\{}\NormalTok{portfolio[}\StringTok{\textquotesingle{}total\_trades\textquotesingle{}}\NormalTok{]}\SpecialCharTok{:.0f\}}\SpecialStringTok{"}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"  {-} Win Rate: }\SpecialCharTok{\{}\NormalTok{portfolio[}\StringTok{\textquotesingle{}winning\_trades\textquotesingle{}}\NormalTok{]}\OperatorTok{/}\NormalTok{portfolio[}\StringTok{\textquotesingle{}total\_trades\textquotesingle{}}\NormalTok{]}\SpecialCharTok{:.1\%\}}\SpecialStringTok{"}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"  {-} Max Drawdown: }\SpecialCharTok{\{}\NormalTok{portfolio[}\StringTok{\textquotesingle{}max\_drawdown\textquotesingle{}}\NormalTok{]}\SpecialCharTok{:.2\%\}}\SpecialStringTok{"}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"  {-} Average Annual Return: }\SpecialCharTok{\{}\NormalTok{portfolio[}\StringTok{\textquotesingle{}average\_year\textquotesingle{}}\NormalTok{]}\SpecialCharTok{:.2\%\}}\SpecialStringTok{"}\NormalTok{)}
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"  {-} Sharpe Ratio: }\SpecialCharTok{\{}\NormalTok{portfolio[}\StringTok{\textquotesingle{}sharpe\_ratio\textquotesingle{}}\NormalTok{]}\SpecialCharTok{:.2f\}}\SpecialStringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+
+**Eligible Strategies:** 9
+  - DELTA S&P (Drawdown: -15.43%)
+  - GAMMA S&P (Drawdown: -5.72%)
+  - VEGA S&P (Drawdown: -6.02%)
+  - WAVE1 (Drawdown: -5.84%)
+  - WAVE2 (Drawdown: -6.01%)
+
+**Selected Units:**
+  - GAMMA S&P: 2 unit(s)
+  - WAVE1: 1 unit(s)
+  - WAVE2: 1 unit(s)
+
+**Portfolio Metrics:**
+  - Total Allocation: $600,000
+  - Required Equity: $250,000
+  - Effective Leverage: 41.7%
+  - Total Trades: 2736
+  - Win Rate: 42.5%
+  - Max Drawdown: -1.62%
+  - Average Annual Return: 20.54%
+  - Sharpe Ratio: 2.46
+\end{verbatim}
+
+\subsection{Performance Visualization}\label{performance-visualization}
+
+\subsubsection{Cumulative Returns Chart}\label{cumulative-returns-chart}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{import}\NormalTok{ matplotlib.pyplot }\ImportTok{as}\NormalTok{ plt}
+\ImportTok{from}\NormalTok{ portfolio\_calculator }\ImportTok{import}\NormalTok{ calculate\_weighted\_returns}
+
+\CommentTok{\# Calculate portfolio monthly returns}
+\NormalTok{portfolio\_monthly\_returns }\OperatorTok{=}\NormalTok{ calculate\_weighted\_returns(}
+\NormalTok{    unit\_selections,}
+\NormalTok{    all\_strategies,}
+\NormalTok{    monthly\_returns,}
+\NormalTok{    portfolio[}\StringTok{\textquotesingle{}total\_equity\textquotesingle{}}\NormalTok{]}
+\NormalTok{)}
+
+\CommentTok{\# Get dates}
+\NormalTok{dates }\OperatorTok{=}\NormalTok{ pd.to\_datetime(monthly\_returns[}\StringTok{\textquotesingle{}DATE\textquotesingle{}}\NormalTok{])}
+
+\CommentTok{\# Calculate cumulative returns}
+\NormalTok{cumulative\_portfolio }\OperatorTok{=}\NormalTok{ [}\DecValTok{0}\NormalTok{]}
+\ControlFlowTok{for}\NormalTok{ ret }\KeywordTok{in}\NormalTok{ portfolio\_monthly\_returns:}
+\NormalTok{    cumulative\_portfolio.append((}\DecValTok{1} \OperatorTok{+}\NormalTok{ cumulative\_portfolio[}\OperatorTok{{-}}\DecValTok{1}\NormalTok{]) }\OperatorTok{*}\NormalTok{ (}\DecValTok{1} \OperatorTok{+}\NormalTok{ ret) }\OperatorTok{{-}} \DecValTok{1}\NormalTok{)}
+\NormalTok{cumulative\_portfolio }\OperatorTok{=}\NormalTok{ cumulative\_portfolio[}\DecValTok{1}\NormalTok{:]}
+
+\CommentTok{\# S\&P 500 cumulative returns}
+\NormalTok{sp500\_column }\OperatorTok{=}\NormalTok{ [col }\ControlFlowTok{for}\NormalTok{ col }\KeywordTok{in}\NormalTok{ monthly\_returns.columns }\ControlFlowTok{if} \StringTok{\textquotesingle{}S\&P\textquotesingle{}} \KeywordTok{in} \BuiltInTok{str}\NormalTok{(col) }\KeywordTok{and} \StringTok{\textquotesingle{}DELTA\textquotesingle{}} \KeywordTok{not} \KeywordTok{in} \BuiltInTok{str}\NormalTok{(col)][}\DecValTok{0}\NormalTok{]}
+\NormalTok{sp500\_returns }\OperatorTok{=}\NormalTok{ monthly\_returns[sp500\_column].fillna(}\DecValTok{0}\NormalTok{).tolist()}
+\NormalTok{cumulative\_sp500 }\OperatorTok{=}\NormalTok{ [}\DecValTok{0}\NormalTok{]}
+\ControlFlowTok{for}\NormalTok{ ret }\KeywordTok{in}\NormalTok{ sp500\_returns:}
+\NormalTok{    cumulative\_sp500.append((}\DecValTok{1} \OperatorTok{+}\NormalTok{ cumulative\_sp500[}\OperatorTok{{-}}\DecValTok{1}\NormalTok{]) }\OperatorTok{*}\NormalTok{ (}\DecValTok{1} \OperatorTok{+}\NormalTok{ ret) }\OperatorTok{{-}} \DecValTok{1}\NormalTok{)}
+\NormalTok{cumulative\_sp500 }\OperatorTok{=}\NormalTok{ cumulative\_sp500[}\DecValTok{1}\NormalTok{:]}
+
+\CommentTok{\# Plot}
+\NormalTok{fig, ax }\OperatorTok{=}\NormalTok{ plt.subplots(figsize}\OperatorTok{=}\NormalTok{(}\DecValTok{12}\NormalTok{, }\DecValTok{6}\NormalTok{))}
+\NormalTok{ax.plot(dates, cumulative\_portfolio, linewidth}\OperatorTok{=}\FloatTok{2.5}\NormalTok{, color}\OperatorTok{=}\StringTok{\textquotesingle{}\#4a90e2\textquotesingle{}}\NormalTok{, label}\OperatorTok{=}\StringTok{\textquotesingle{}Portfolio\textquotesingle{}}\NormalTok{, alpha}\OperatorTok{=}\FloatTok{0.9}\NormalTok{)}
+\NormalTok{ax.plot(dates, cumulative\_sp500, linewidth}\OperatorTok{=}\DecValTok{2}\NormalTok{, color}\OperatorTok{=}\StringTok{\textquotesingle{}\#ff8c42\textquotesingle{}}\NormalTok{, linestyle}\OperatorTok{=}\StringTok{\textquotesingle{}{-}{-}\textquotesingle{}}\NormalTok{, label}\OperatorTok{=}\StringTok{\textquotesingle{}S\&P 500\textquotesingle{}}\NormalTok{, alpha}\OperatorTok{=}\FloatTok{0.8}\NormalTok{)}
+\NormalTok{ax.axhline(}\DecValTok{0}\NormalTok{, color}\OperatorTok{=}\StringTok{\textquotesingle{}\#666666\textquotesingle{}}\NormalTok{, linestyle}\OperatorTok{=}\StringTok{\textquotesingle{}{-}{-}\textquotesingle{}}\NormalTok{, linewidth}\OperatorTok{=}\DecValTok{1}\NormalTok{, alpha}\OperatorTok{=}\FloatTok{0.5}\NormalTok{)}
+
+\NormalTok{ax.set\_xlabel(}\StringTok{\textquotesingle{}Date\textquotesingle{}}\NormalTok{, fontsize}\OperatorTok{=}\DecValTok{12}\NormalTok{, fontweight}\OperatorTok{=}\StringTok{\textquotesingle{}bold\textquotesingle{}}\NormalTok{)}
+\NormalTok{ax.set\_ylabel(}\StringTok{\textquotesingle{}Cumulative Return\textquotesingle{}}\NormalTok{, fontsize}\OperatorTok{=}\DecValTok{12}\NormalTok{, fontweight}\OperatorTok{=}\StringTok{\textquotesingle{}bold\textquotesingle{}}\NormalTok{)}
+\NormalTok{ax.set\_title(}\StringTok{\textquotesingle{}Portfolio vs S\&P 500 Performance\textquotesingle{}}\NormalTok{, fontsize}\OperatorTok{=}\DecValTok{14}\NormalTok{, fontweight}\OperatorTok{=}\StringTok{\textquotesingle{}bold\textquotesingle{}}\NormalTok{, pad}\OperatorTok{=}\DecValTok{15}\NormalTok{)}
+\NormalTok{ax.grid(}\VariableTok{True}\NormalTok{, alpha}\OperatorTok{=}\FloatTok{0.2}\NormalTok{, linestyle}\OperatorTok{=}\StringTok{\textquotesingle{}:\textquotesingle{}}\NormalTok{)}
+\NormalTok{ax.legend(loc}\OperatorTok{=}\StringTok{\textquotesingle{}upper left\textquotesingle{}}\NormalTok{, fontsize}\OperatorTok{=}\DecValTok{11}\NormalTok{)}
+\NormalTok{ax.yaxis.set\_major\_formatter(plt.FuncFormatter(}\KeywordTok{lambda}\NormalTok{ y, \_: }\SpecialStringTok{f\textquotesingle{}}\SpecialCharTok{\{}\NormalTok{y}\SpecialCharTok{:.0\%\}}\SpecialStringTok{\textquotesingle{}}\NormalTok{))}
+\NormalTok{ax.set\_facecolor(}\StringTok{\textquotesingle{}\#fafafa\textquotesingle{}}\NormalTok{)}
+
+\NormalTok{plt.tight\_layout()}
+\NormalTok{plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{portfolio_analytics_files/figure-pdf/fig-cumulative-returns-output-1.pdf}}
+
+}
+
+\caption{\label{fig-cumulative-returns}Portfolio Cumulative Returns vs
+S\&P 500}
+
+\end{figure}%
+
+\subsubsection{Monthly Returns
+Distribution}\label{monthly-returns-distribution}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{fig, ax }\OperatorTok{=}\NormalTok{ plt.subplots(figsize}\OperatorTok{=}\NormalTok{(}\DecValTok{12}\NormalTok{, }\DecValTok{6}\NormalTok{))}
+
+\CommentTok{\# Create histogram}
+\NormalTok{ax.hist(portfolio\_monthly\_returns, bins}\OperatorTok{=}\DecValTok{30}\NormalTok{, color}\OperatorTok{=}\StringTok{\textquotesingle{}\#4a90e2\textquotesingle{}}\NormalTok{, alpha}\OperatorTok{=}\FloatTok{0.7}\NormalTok{, edgecolor}\OperatorTok{=}\StringTok{\textquotesingle{}black\textquotesingle{}}\NormalTok{)}
+\NormalTok{ax.axvline(np.mean(portfolio\_monthly\_returns), color}\OperatorTok{=}\StringTok{\textquotesingle{}\#ff8c42\textquotesingle{}}\NormalTok{, linestyle}\OperatorTok{=}\StringTok{\textquotesingle{}{-}{-}\textquotesingle{}}\NormalTok{, linewidth}\OperatorTok{=}\DecValTok{2}\NormalTok{, label}\OperatorTok{=}\SpecialStringTok{f\textquotesingle{}Mean: }\SpecialCharTok{\{}\NormalTok{np}\SpecialCharTok{.}\NormalTok{mean(portfolio\_monthly\_returns)}\SpecialCharTok{:.2\%\}}\SpecialStringTok{\textquotesingle{}}\NormalTok{)}
+\NormalTok{ax.axvline(np.median(portfolio\_monthly\_returns), color}\OperatorTok{=}\StringTok{\textquotesingle{}\#2ecc71\textquotesingle{}}\NormalTok{, linestyle}\OperatorTok{=}\StringTok{\textquotesingle{}{-}{-}\textquotesingle{}}\NormalTok{, linewidth}\OperatorTok{=}\DecValTok{2}\NormalTok{, label}\OperatorTok{=}\SpecialStringTok{f\textquotesingle{}Median: }\SpecialCharTok{\{}\NormalTok{np}\SpecialCharTok{.}\NormalTok{median(portfolio\_monthly\_returns)}\SpecialCharTok{:.2\%\}}\SpecialStringTok{\textquotesingle{}}\NormalTok{)}
+
+\NormalTok{ax.set\_xlabel(}\StringTok{\textquotesingle{}Monthly Return\textquotesingle{}}\NormalTok{, fontsize}\OperatorTok{=}\DecValTok{12}\NormalTok{, fontweight}\OperatorTok{=}\StringTok{\textquotesingle{}bold\textquotesingle{}}\NormalTok{)}
+\NormalTok{ax.set\_ylabel(}\StringTok{\textquotesingle{}Frequency\textquotesingle{}}\NormalTok{, fontsize}\OperatorTok{=}\DecValTok{12}\NormalTok{, fontweight}\OperatorTok{=}\StringTok{\textquotesingle{}bold\textquotesingle{}}\NormalTok{)}
+\NormalTok{ax.set\_title(}\StringTok{\textquotesingle{}Monthly Returns Distribution\textquotesingle{}}\NormalTok{, fontsize}\OperatorTok{=}\DecValTok{14}\NormalTok{, fontweight}\OperatorTok{=}\StringTok{\textquotesingle{}bold\textquotesingle{}}\NormalTok{, pad}\OperatorTok{=}\DecValTok{15}\NormalTok{)}
+\NormalTok{ax.grid(}\VariableTok{True}\NormalTok{, alpha}\OperatorTok{=}\FloatTok{0.2}\NormalTok{, linestyle}\OperatorTok{=}\StringTok{\textquotesingle{}:\textquotesingle{}}\NormalTok{, axis}\OperatorTok{=}\StringTok{\textquotesingle{}y\textquotesingle{}}\NormalTok{)}
+\NormalTok{ax.legend(loc}\OperatorTok{=}\StringTok{\textquotesingle{}upper right\textquotesingle{}}\NormalTok{, fontsize}\OperatorTok{=}\DecValTok{11}\NormalTok{)}
+\NormalTok{ax.xaxis.set\_major\_formatter(plt.FuncFormatter(}\KeywordTok{lambda}\NormalTok{ x, \_: }\SpecialStringTok{f\textquotesingle{}}\SpecialCharTok{\{}\NormalTok{x}\SpecialCharTok{:.1\%\}}\SpecialStringTok{\textquotesingle{}}\NormalTok{))}
+\NormalTok{ax.set\_facecolor(}\StringTok{\textquotesingle{}\#fafafa\textquotesingle{}}\NormalTok{)}
+
+\NormalTok{plt.tight\_layout()}
+\NormalTok{plt.show()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{figure}[H]
+
+\centering{
+
+\pandocbounded{\includegraphics[keepaspectratio]{portfolio_analytics_files/figure-pdf/fig-monthly-distribution-output-1.pdf}}
+
+}
+
+\caption{\label{fig-monthly-distribution}Monthly Returns Distribution}
+
+\end{figure}%
+
+\section{Usage Guide}\label{usage-guide}
+
+\subsection{Interactive Dashboard}\label{interactive-dashboard}
+
+The SOVRUN portfolio analytics system includes a Streamlit web
+application for interactive portfolio construction.
+
+\subsubsection{Installation}\label{installation}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Clone repository}
+\FunctionTok{git}\NormalTok{ clone https://github.com/mosaicrob/sites.git}
+\BuiltInTok{cd}\NormalTok{ sites}
+
+\CommentTok{\# Install dependencies}
+\ExtensionTok{pip3}\NormalTok{ install }\AttributeTok{{-}r}\NormalTok{ requirements.txt}
+
+\CommentTok{\# Launch dashboard}
+\BuiltInTok{export} \VariableTok{PATH}\OperatorTok{=}\StringTok{"}\VariableTok{$HOME}\StringTok{/Library/Python/3.9/bin:}\VariableTok{$PATH}\StringTok{"}
+\ExtensionTok{streamlit}\NormalTok{ run portfolio\_dashboard\_v2.py}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Dashboard Features}\label{dashboard-features}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Portfolio Configuration}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Total Investment slider
+  \item
+    Maximum Leverage selector (100\%-300\%)
+  \item
+    Risk Appetite filter
+  \end{itemize}
+\item
+  \textbf{Strategy Selection}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Vertical list of eligible strategies
+  \item
+    Unit quantity selectors
+  \item
+    Real-time allocation updates
+  \end{itemize}
+\item
+  \textbf{Analytics Display}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    12 key metrics in brilliant gradient boxes
+  \item
+    Cumulative returns chart vs S\&P 500
+  \item
+    Max drawdown and average return annotations
+  \end{itemize}
+\item
+  \textbf{Export Options}
+
+  \begin{itemize}
+  \tightlist
+  \item
+    High-resolution PNG download
+  \item
+    PDF export capability (requires installed PDF skill)
+  \end{itemize}
+\end{enumerate}
+
+\subsection{Programmatic Access}\label{programmatic-access}
+
+\subsubsection{Python API}\label{python-api}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\ImportTok{from}\NormalTok{ portfolio\_calculator }\ImportTok{import}\NormalTok{ load\_strategy\_data, calculate\_portfolio\_metrics}
+\ImportTok{from}\NormalTok{ chart\_generator }\ImportTok{import}\NormalTok{ generate\_analytics\_image}
+
+\CommentTok{\# Load data}
+\NormalTok{data }\OperatorTok{=}\NormalTok{ load\_strategy\_data(}\StringTok{"strategy{-}returns.xlsx"}\NormalTok{)}
+
+\CommentTok{\# Define allocation}
+\NormalTok{unit\_selections }\OperatorTok{=}\NormalTok{ \{}
+    \StringTok{\textquotesingle{}DELTA S\&P\textquotesingle{}}\NormalTok{: }\DecValTok{1}\NormalTok{,}
+    \StringTok{\textquotesingle{}GAMMA S\&P\textquotesingle{}}\NormalTok{: }\DecValTok{2}\NormalTok{,}
+\NormalTok{\}}
+
+\CommentTok{\# Calculate metrics}
+\NormalTok{portfolio }\OperatorTok{=}\NormalTok{ calculate\_portfolio\_metrics(}
+\NormalTok{    unit\_selections,}
+\NormalTok{    data[}\StringTok{\textquotesingle{}strategies\textquotesingle{}}\NormalTok{],}
+\NormalTok{    data[}\StringTok{\textquotesingle{}monthly\_returns\textquotesingle{}}\NormalTok{],}
+\NormalTok{    max\_leverage}\OperatorTok{=}\DecValTok{200}
+\NormalTok{)}
+
+\CommentTok{\# Generate image}
+\NormalTok{image\_path }\OperatorTok{=}\NormalTok{ generate\_analytics\_image(}
+\NormalTok{    portfolio,}
+\NormalTok{    unit\_selections,}
+\NormalTok{    data[}\StringTok{\textquotesingle{}strategies\textquotesingle{}}\NormalTok{],}
+\NormalTok{    data[}\StringTok{\textquotesingle{}monthly\_returns\textquotesingle{}}\NormalTok{],}
+\NormalTok{    total\_investment}\OperatorTok{=}\DecValTok{1000000}
+\NormalTok{)}
+
+\BuiltInTok{print}\NormalTok{(}\SpecialStringTok{f"Analytics saved to: }\SpecialCharTok{\{}\NormalTok{image\_path}\SpecialCharTok{\}}\SpecialStringTok{"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\section{Risk Considerations}\label{risk-considerations}
+
+\subsection{Leverage Constraints}\label{leverage-constraints}
+
+The system enforces maximum leverage limits to prevent excessive risk:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{100\% Leverage}: No additional exposure beyond allocated
+  capital
+\item
+  \textbf{150\% Leverage}: Moderate additional exposure (1.5x)
+\item
+  \textbf{200\% Leverage}: Significant additional exposure (2x)
+\item
+  \textbf{300\% Leverage}: Maximum allowed exposure (3x)
+\end{itemize}
+
+\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-warning-color!10!white, coltitle=black, colframe=quarto-callout-warning-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm, bottomtitle=1mm, colback=white, titlerule=0mm, breakable, bottomrule=.15mm, rightrule=.15mm, opacitybacktitle=0.6, title=\textcolor{quarto-callout-warning-color}{\faExclamationTriangle}\hspace{0.5em}{Leverage Risk}, left=2mm, leftrule=.75mm]
+
+Higher leverage amplifies both gains and losses. Ensure you understand
+the implications of leveraged trading before allocating capital.
+
+\end{tcolorbox}
+
+\subsection{Drawdown Monitoring}\label{drawdown-monitoring}
+
+Maximum drawdown represents the largest peak-to-valley decline in
+portfolio value. The system provides four risk tolerance levels:
+
+\begin{tcolorbox}[enhanced jigsaw, colbacktitle=quarto-callout-note-color!10!white, coltitle=black, colframe=quarto-callout-note-color-frame, toptitle=1mm, toprule=.15mm, opacityback=0, arc=.35mm, bottomtitle=1mm, colback=white, titlerule=0mm, breakable, bottomrule=.15mm, rightrule=.15mm, opacitybacktitle=0.6, title=\textcolor{quarto-callout-note-color}{\faInfo}\hspace{0.5em}{Risk Appetite Levels}, left=2mm, leftrule=.75mm]
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{S\&P Level}: Matches S\&P 500 historical drawdown
+  (\textasciitilde20-25\%)
+\item
+  \textbf{\textless20\%}: Moderate risk tolerance
+\item
+  \textbf{\textless10\%}: Conservative risk tolerance
+\item
+  \textbf{\textless5\%}: Very conservative risk tolerance
+\end{itemize}
+
+\end{tcolorbox}
+
+\subsection{Correlation Risk}\label{correlation-risk}
+
+While the system allocates across multiple strategies, correlation
+between strategies may increase during market stress periods.
+Diversification does not eliminate all risk.
+
+\section{Technical Implementation}\label{technical-implementation}
+
+\subsection{Architecture}\label{architecture}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{graph TD}
+\NormalTok{    A[strategy{-}returns.xlsx] {-}{-}\textgreater{} B[portfolio\_calculator.py]}
+\NormalTok{    B {-}{-}\textgreater{} C[portfolio\_dashboard\_v2.py]}
+\NormalTok{    B {-}{-}\textgreater{} D[chart\_generator.py]}
+\NormalTok{    C {-}{-}\textgreater{} E[Streamlit Web UI]}
+\NormalTok{    D {-}{-}\textgreater{} F[PNG Analytics Image]}
+\NormalTok{    E {-}{-}\textgreater{} F}
+\end{Highlighting}
+\end{Shaded}
+
+\subsection{Data Flow}\label{data-flow}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  \textbf{Data Loading}: \texttt{portfolio\_calculator.py} reads
+  \texttt{strategy-returns.xlsx}
+\item
+  \textbf{User Input}: Streamlit dashboard collects allocation
+  preferences
+\item
+  \textbf{Calculation}: Portfolio metrics computed with margin equity
+  factors
+\item
+  \textbf{Visualization}: \texttt{chart\_generator.py} creates analytics
+  dashboard image
+\item
+  \textbf{Export}: High-resolution PNG saved and downloadable
+\end{enumerate}
+
+\subsection{File Structure}\label{file-structure}
+
+\begin{verbatim}
+portfolio-builder/
+├── strategy-returns.xlsx           # Source data (9 strategies)
+├── portfolio_dashboard_v2.py       # Main Streamlit app
+├── portfolio_calculator.py         # Calculation engine
+├── chart_generator.py              # Image generation
+├── portfolio_analytics.qmd         # This document
+├── requirements.txt                # Python dependencies
+├── assets/
+│   └── sovrun_logo_pro.svg        # SOVRUN branding
+└── VEGA Returns/
+    ├── analyze_returns.py          # Performance statistics
+    └── *.csv                       # Strategy data files
+\end{verbatim}
+
+\section{Appendix}\label{appendix}
+
+\subsection{Strategy Descriptions}\label{strategy-descriptions}
+
+\subsubsection{DELTA S\&P}\label{delta-sp}
+
+Conservative strategy with lowest drawdown profile. Ideal for
+risk-averse allocators.
+
+\subsubsection{GAMMA S\&P}\label{gamma-sp}
+
+Balanced risk-return profile with moderate drawdown and consistent
+performance.
+
+\subsubsection{VEGA Variants}\label{vega-variants}
+
+Four variants (LE DN, LE UP, SE DN, SE UP) providing directional and
+volatility exposure.
+
+\subsubsection{WAVE Strategies}\label{wave-strategies}
+
+WAVE1 and WAVE2 provide complementary market regime coverage.
+
+\subsubsection{BS ATLAS, AURORA, GEMINI}\label{bs-atlas-aurora-gemini}
+
+Blue Sky strategies with varying risk-return characteristics.
+
+\subsubsection{VECTOR APEX ES}\label{vector-apex-es}
+
+High-performance strategy with elevated risk profile.
+
+\subsection{References}\label{references}
+
+\begin{itemize}
+\tightlist
+\item
+  TradeStation Performance Report Format Documentation
+\item
+  Portfolio Optimization Theory (Markowitz, 1952)
+\item
+  Risk-Adjusted Performance Metrics (Sharpe, Sortino, Calmar)
+\item
+  SOVRUN Education: \href{https://sovrun.io}{sovrun.io}
+\end{itemize}
+
+\subsection{Changelog}\label{changelog}
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{2026-02-07}: Initial QMD documentation created
+\item
+  Integration with Streamlit dashboard v2
+\item
+  Added example portfolio analyses
+\item
+  Included performance visualizations
+\end{itemize}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{SOVRUN Education} \textbar{} Risk-First Investing For questions
+or support, visit \href{https://sovrun.io}{sovrun.io}
+
+
+
+
+\end{document}
